@@ -1,11 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Switch, Route } from "react-router-dom";
+
 import './App.css';
+
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import styled from "styled-components";
 /* import { BrowserRouter as Router, Route } from "react-router-dom"; */
 
+// import Navigation from "./components/Navigation";
+// import Loading from "./components/Loading";
+// import MessageBox from "./components/MessageBox";
+// import SignUp from "./pages/SignUp";
+// import Login from "./pages/Login";
+// import MyHomepage from "./pages/MyHomepage";
+// import Homepages from "./pages/Homepages";
+// import HomepageDetails from "./pages/HomepageDetails";
+
+// import { useDispatch, useSelector } from "react-redux";
+// import { selectAppLoading } from "./store/appState/selectors";
+// import { getUserWithStoredToken } from "./store/user/actions";
+
 export default function App() {
+
+  // const dispatch = useDispatch();
+  // const isLoading = useSelector(selectAppLoading);
+
+  // useEffect(() => {
+  //   dispatch(getUserWithStoredToken());
+  // }, [dispatch]);
 
   const Button = styled.button`
   /* Adapt the colors based on primary prop */
@@ -24,7 +47,18 @@ export default function App() {
          <Button > login patient </Button>
          <Button > login doctor </Button>
          <Button > patient signup </Button>
-      <Footer />
+
+      {/* <Navigation />
+      <MessageBox />
+      <Switch>
+        {isLoading ? <Loading /> : null}
+        <Route exact path="/" component={Homepages} />
+        <Route path="/signup" component={SignUp} />
+        <Route path="/login" component={Login} />
+        <Route path="/myhomepage" component={MyHomepage} />
+        <Route path="/homepages/:id" component={HomepageDetails} />
+      </Switch> */}
+            <Footer />
  </div>
   );
 }
