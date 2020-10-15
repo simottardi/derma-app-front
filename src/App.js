@@ -15,7 +15,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectAppLoading } from "./store/appState/selectors";
 import { getUserWithStoredToken } from "./store/user/actions";
 
+require("dotenv")
+
+
+
 function App() {
+
+  console.log("WHAT IS ENV", process.env.API_URL);
+
   const dispatch = useDispatch();
   const isLoading = useSelector(selectAppLoading);
 

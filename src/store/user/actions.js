@@ -75,7 +75,11 @@ export const login = (email, password) => {
   return async (dispatch, getState) => {
     dispatch(appLoading());
     try {
-      const response = await axios.post(`${apiUrl}/login`, {
+
+         console.log("api url",apiUrl);
+
+      const response = await axios.post(`${apiUrl}/login/patient`, {
+     
         email,
         password
       });
