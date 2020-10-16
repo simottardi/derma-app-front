@@ -4,7 +4,8 @@ import NavbarItem from "./NavbarItem";
 export default function LoggedOut() {
   return (
     <>
-      <NavbarItem path="/login" linkText="Login" />
+      <NavbarItem path="/login/patient" linkText="Patient Login" />
+      <NavbarItem path="/login/doctor" linkText="Doctor Login" />
     </>
   );
 }

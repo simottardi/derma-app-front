@@ -10,7 +10,7 @@ const homepageDetailsFetched = homepage => ({
 
 export const fetchHomepageById = id => {
   return async (dispatch, getState) => {
-    const response = await axios.get(`${apiUrl}/homepages/${id}`);
+    const response = await axios.get(`${apiUrl}/patient/${id}`);
     console.log(response);
     dispatch(homepageDetailsFetched(response.data.homepage));
   };

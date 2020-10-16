@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import MyHomepage from "./pages/MyHomepage";
 import Homepages from "./pages/Homepages";
 import HomepageDetails from "./pages/HomepageDetails";
+import LoginDoctor from "./pages/LoginDoctor";
 
 import { useDispatch, useSelector } from "react-redux";
 import { selectAppLoading } from "./store/appState/selectors";
@@ -38,8 +39,9 @@ function App() {
         {isLoading ? <Loading /> : null}
         <Route exact path="/" component={Homepages} />
         <Route path="/signup" component={SignUp} />
-        <Route path="/login" component={Login} />
-        <Route path="/myhomepage" component={MyHomepage} />
+        <Route path="/login/patient" component={Login} />
+        <Route path="/login/doctor" component={LoginDoctor} />
+        <Route path="/myhomepage/" component={MyHomepage} />
         <Route path="/homepages/:id" component={HomepageDetails} />
       </Switch>
     </div>

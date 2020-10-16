@@ -112,7 +112,7 @@ export const getUserWithStoredToken = () => {
     try {
       // if we do have a token,
       // check wether it is still valid or if it is expired
-      const response = await axios.get(`${apiUrl}/me`, {
+      const response = await axios.get(`${apiUrl}/patient/me`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 

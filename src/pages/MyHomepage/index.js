@@ -10,59 +10,79 @@ import MyHomepageForm from "./MyHomepageForm";
 import StoryForm from "./StoryForm";
 import Homepage from "../../components/Homepage";
 import StoryCarousel from "../../components/StoryCarousel";
+import ItchyButton from "../../components/ItchyButton";
 
 export default function MyHomepage() {
-  const { token, homepage, id } = useSelector(selectUser);
+  const { token, homepage, name,email, id, doctorId, address, createdAt } = useSelector(selectUser);
   const [editMode, setEditMode] = useState(false);
   const [postStoryMode, setpostStoryMode] = useState(false);
   const history = useHistory();
 
   if (token === null) {
+    console.log("token null")
     history.push("/");
   }
 
-  if (homepage === null) {
-    return <Loading />;
-  }
+  // if (homepage === null) {
+  //   console.log("homepage null")
+  //   return <Loading />;
+  // }
 
-  const displayButtons =
-    id === homepage.userId && editMode === false && postStoryMode === false;
+  // const displayButtons =
+  //   id === homepage.userId && editMode === false && postStoryMode === false;
 
   //   console.log("EDITMODE", editMode);
   return (
-    <>
-      <Homepage
-        id={homepage.id}
-        title={homepage.title}
-        description={homepage.description}
-        backgroundColor={homepage.backgroundColor}
-        color={homepage.color}
-        showLink={false}
-      />
-      <Container>
-        {displayButtons ? (
-          <Card>
-            <Button onClick={() => setEditMode(true)}>Edit my page</Button>
-            <Button onClick={() => setpostStoryMode(true)} className="mt-2">
-              Post a cool story bro
-            </Button>
-          </Card>
-        ) : null}
+    <div>
+{/* testing this is working */}
+    <p>this is working</p>
+    {/* testing fetching the user and its data, will */}
+    
+    <p>welcome back <strong>{name}</strong></p>
+<p>email: {email}</p>
+<p>id: {id}</p>
+<p>doctorId: {doctorId}</p>
+<p>address: {address}</p>
+<p>Patient since:{createdAt}</p>
 
-        {editMode ? (
-          <Card>
-            <MyHomepageForm />
-          </Card>
-        ) : null}
 
-        {postStoryMode ? (
-          <Card>
-            <StoryForm />
-          </Card>
-        ) : null}
 
-        <StoryCarousel homepage={homepage} />
-      </Container>
-    </>
+<ItchyButton />
+    </div>
+
+    
   );
 }
+
+      //  <Homepage
+      //   id={homepage.id}
+      //   title={homepage.title}
+      //   description={homepage.description}
+      //   backgroundColor={homepage.backgroundColor}
+      //   color={homepage.color}
+      //   showLink={false}
+      // />
+      // <Container>
+      //   {displayButtons ? (
+      //     <Card>
+      //       <Button onClick={() => setEditMode(true)}>Edit my page</Button>
+      //       <Button onClick={() => setpostStoryMode(true)} className="mt-2">
+      //         Post a cool story bro
+      //       </Button>
+      //     </Card>
+      //   ) : null}
+
+      //   {editMode ? (
+      //     <Card>
+      //       <MyHomepageForm />
+      //     </Card>
+      //   ) : null}
+
+      //   {postStoryMode ? (
+      //     <Card>
+      //       <StoryForm />
+      //     </Card>
+      //   ) : null}
+
+      //   <StoryCarousel homepage={homepage} />
+      // </Container>
