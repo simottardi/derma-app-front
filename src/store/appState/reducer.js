@@ -5,9 +5,20 @@ import {
   CLEAR_MESSAGE
 } from "./actions";
 
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, "0");
+var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+var yyyy = today.getFullYear();
+
+today = yyyy + "-" + mm + "-" + dd;
+
+
+
+
 const initialState = {
   loading: false,
-  message: null
+  message: null,
+  today: today,
 };
 
 export default (state = initialState, action) => {

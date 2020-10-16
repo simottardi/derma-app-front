@@ -8,6 +8,7 @@ import MessageBox from "./components/MessageBox";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import MyHomepage from "./pages/MyHomepage";
+import MyHistory from "./pages/MyHistory";
 import Homepages from "./pages/Homepages";
 import HomepageDetails from "./pages/HomepageDetails";
 import LoginDoctor from "./pages/LoginDoctor";
@@ -42,6 +43,7 @@ function App() {
         <Route path="/login/patient" component={Login} />
         <Route path="/login/doctor" component={LoginDoctor} />
         <Route path="/myhomepage/" component={MyHomepage} />
+        <Route path="/myhistory/" component={MyHistory} />
         <Route path="/homepages/:id" component={HomepageDetails} />
       </Switch>
     </div>

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../store/user/selectors";
+
+import { selectToday } from "../../store/appState/selectors";
 import Container from "react-bootstrap/Container";
 import Loading from "../../components/Loading";
 import { useHistory } from "react-router-dom";
@@ -12,11 +14,22 @@ import Homepage from "../../components/Homepage";
 import StoryCarousel from "../../components/StoryCarousel";
 import ItchyButton from "../../components/ItchyButton";
 
+// PLAN
+// [x]set Date
+// fetch history
+// fetch current day // what if there is no day? --> creat one
+// display the patient info 
+// send requests to update their day
+
+
 export default function MyHomepage() {
   const { token, homepage, name,email, id, doctorId, address, createdAt } = useSelector(selectUser);
+  const  today = useSelector(selectToday)
   const [editMode, setEditMode] = useState(false);
   const [postStoryMode, setpostStoryMode] = useState(false);
   const history = useHistory();
+
+  console.log("today", today )
 
   if (token === null) {
     console.log("token null")
@@ -35,6 +48,8 @@ export default function MyHomepage() {
   return (
     <div>
 {/* testing this is working */}
+
+<p> Today is { today}  </p>
     <p>this is working</p>
     {/* testing fetching the user and its data, will */}
     

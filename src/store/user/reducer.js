@@ -7,12 +7,12 @@ import {
   STORY_DELETE_SUCCESS
 } from "./actions";
 
-const initialState = {
-  token: localStorage.getItem("token"),
-  name: null,
-  email: null,
-  homepage: null
-};
+ const initialState = {
+   token: localStorage.getItem("token"),
+   name: null,
+   email: null,
+   homepage: null
+ };
 
 export default (state = initialState, action) => {
   switch (action.type) {
