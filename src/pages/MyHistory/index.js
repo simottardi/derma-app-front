@@ -51,7 +51,29 @@ export default function MyHistory() {
 {/* testing this is working */}
 <h1> Patient history</h1>
 <p> Today is { today}  </p>
+
+
 {/* THE PATIENT DAYS WILL BE DISPLAYED HERE */}
+      <Container>
+{patientHistory.map(day => {
+          return (
+            <div>
+              <p>ID: {day.id}</p>
+              <p>Day: {day.date}</p>
+              <p>Itch: score {day.itchScore}</p>
+              <p>Note: {day.note}</p>
+              <p>Image url: {day.image}</p>
+          <p>Morning {day.medicationMorning ? "True" : "False"}</p> 
+            <p>Afternoon {day.medicationAfternoon ? "True" : "False"}</p>
+            <p>Evening {day.medicationEvening ? "True" : "False"}</p> 
+
+
+            </div>
+          );
+        })}
+
+
+      </Container>
     </div>
 
     
