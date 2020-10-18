@@ -102,17 +102,17 @@ export const login = (email, password) => {
 
 export const getUserWithStoredToken = () => {
   return async (dispatch, getState) => {
-    console.log("login with stored token")
+    // console.log("login with stored token")
     
     // get token from the state
     const token = selectToken(getState());
-console.log("stored token", token)
+// console.log("stored token", token)
     // if we have no token, stop
     if (token === null) return;
 
     dispatch(appLoading());
     try {
-      console.log("trying to get patient.me")
+      // console.log("trying to get patient.me")
       // if we do have a token,
       // check wether it is still valid or if it is expired
       // const response = await axios.get(`${apiUrl}/patient/me`, {

@@ -8,7 +8,9 @@ import { useHistory } from "react-router-dom";
 import { fetchPatientHistory } from "../../store/patientHistory/actions";
 import { selectPatientHistory } from "../../store/patientHistory/selectors";
 
+import { selectAppLoading } from "../../store/appState/selectors";
 
+  
 /* import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import MyHomepageForm from "./MyHomepageForm";
@@ -32,7 +34,7 @@ export default function MyHistory() {
   const patientHistory = useSelector(selectPatientHistory)
   const history = useHistory();
    const dispatch = useDispatch();
-
+  const isLoading = useSelector(selectAppLoading);
   console.log("today", today )
   console.log("patient history from selector", patientHistory )
 
@@ -42,7 +44,7 @@ export default function MyHistory() {
   }
 
     useEffect(() => {
-      console.log("fetch patient history dispatched")
+      console.log("Use effect  --> fetch patient history dispatched ")
     dispatch(fetchPatientHistory());
   }, [dispatch]);
 
@@ -57,7 +59,7 @@ export default function MyHistory() {
       <Container>
 {patientHistory.map(day => {
           return (
-            <div>
+            <div key={day.id}>
               <p>ID: {day.id}</p>
               <p>Day: {day.date}</p>
               <p>Itch: score {day.itchScore}</p>
@@ -71,7 +73,11 @@ export default function MyHistory() {
             </div>
           );
         })}
-
+ {isLoading ? (
+          <em>Loading...</em>
+        ) : (
+          <button onClick={() => dispatch(fetchPatientHistory()) && console.log("click")}>Load more</button>
+        )}
 
       </Container>
     </div>
