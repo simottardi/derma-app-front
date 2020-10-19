@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Jumbotron, Button } from "react-bootstrap";
 import { selectUser } from "../../store/user/selectors";
 import { selectToday } from "../../store/appState/selectors";
 import Container from "react-bootstrap/Container";
@@ -9,6 +10,7 @@ import { fetchPatientHistory } from "../../store/patientHistory/actions";
 import { selectPatientHistory } from "../../store/patientHistory/selectors";
 
 import { selectAppLoading } from "../../store/appState/selectors";
+import ItchyButton from "../../components/ItchyButton";
 
   
 /* import Button from "react-bootstrap/Button";
@@ -62,13 +64,82 @@ export default function MyHistory() {
             <div key={day.id}>
               <p>ID: {day.id}</p>
               <p>Day: {day.date}</p>
+              <ItchyButton dayId={day.id}/>
               <p>Itch: score {day.itchScore}</p>
               <p>Note: {day.note}</p>
               <p>Image url: {day.image}</p>
-          <p>Morning {day.medicationMorning ? "True" : "False"}</p> 
-            <p>Afternoon {day.medicationAfternoon ? "True" : "False"}</p>
-            <p>Evening {day.medicationEvening ? "True" : "False"}</p> 
-
+{day.medicationMorning === true ? (
+              <p>
+                Uncheck medication #{day.id}
+                <input
+                  type="checkbox"
+                  checked
+                  onClick={(event) => {
+                    console.log("check this medication as false", day.id);
+                    // dispatch(patchUserBlock(day.id));
+                  }}
+                ></input>
+              </p>
+            ) : (
+              <p>
+                Check medication #{day.id}
+                <input
+                  type="checkbox"
+                  onClick={(event) => {
+                    console.log("check this medication as true", day.id);
+                    // dispatch(patchUserBlock(day.id));
+                  }}
+                ></input>
+              </p>
+                          )}
+ {day.medicationAfternoon === true ? (
+              <p>
+                Uncheck medication #{day.id}
+                <input
+                  type="checkbox"
+                  checked
+                  onClick={(event) => {
+                    console.log("check this medication as false", day.id);
+                    // dispatch(patchUserBlock(day.id));
+                  }}
+                ></input>
+              </p>
+            ) : (
+              <p>
+                Check medication #{day.id}
+                <input
+                  type="checkbox"
+                  onClick={(event) => {
+                    console.log("check this medication as true", day.id);
+                    // dispatch(patchUserBlock(day.id));
+                  }}
+                ></input>
+              </p>
+                          )}
+{day.medicationEvening === true ? (
+              <p>
+                Uncheck medication #{day.id}
+                <input
+                  type="checkbox"
+                  checked
+                  onClick={(event) => {
+                    console.log("check this medication as false", day.id);
+                    // dispatch(patchUserBlock(day.id));
+                  }}
+                ></input>
+              </p>
+            ) : (
+              <p>
+                Check medication #{day.id}
+                <input
+                  type="checkbox"
+                  onClick={(event) => {
+                    console.log("check this medication as true", day.id);
+                    // dispatch(patchUserBlock(day.id));
+                  }}
+                ></input>
+              </p>
+                          )}
 
             </div>
           );

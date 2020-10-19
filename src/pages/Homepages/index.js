@@ -33,8 +33,8 @@ export default function HomePages() {
         <h1>Welcome to DermaApp</h1>
       </Jumbotron>
       <Container>
-<ItchyButton />
-<PatientCard />
+{/* <ItchyButton /> */}
+{/* <PatientCard /> */}
       </Container>
     </>
   );
