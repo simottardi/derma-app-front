@@ -1,5 +1,5 @@
 import { FETCH_PATIENTHISTORY_SUCCESS } from "./actions";
-import { HOMEPAGE_UPDATED } from "../user/actions";
+import { MYDAY_UPDATED } from "./actions";
 
 const initialState = [];
 
@@ -11,15 +11,16 @@ export default (state = initialState, action) => {
     
       return [...state, ...action.payload];
     }
-    case HOMEPAGE_UPDATED: {
-      return state.map(homepage => {
-        if (homepage.id !== action.payload.id) {
-          return homepage;
-        }
-
-        return { ...action.payload, stories: [...homepage.stories] };
+    case MYDAY_UPDATED:{
+          console.log(" MyDayUpdated in the reducer", action.payload,"state", state )
+    return state.map(day => {
+       if (day.id !== action.payload.id) {
+          return day;
+      }
+      return {...action.payload};
       });
     }
+
     default:
       return state;
   }
