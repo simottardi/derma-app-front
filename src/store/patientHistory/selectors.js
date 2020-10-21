@@ -1,2 +1,1 @@
-export const selectPatientHistory = state => state.patientHistory;
-
+export const selectPatientHistory = (state) => state.patientHistory;

@@ -17,10 +17,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectAppLoading } from "./store/appState/selectors";
 import { getUserWithStoredToken } from "./store/user/actions";
 
-require("dotenv")
+require("dotenv");
 
 function App() {
-
   // console.log("WHAT IS ENV", process.env.API_URL);
 
   const dispatch = useDispatch();
@@ -40,10 +39,9 @@ function App() {
         <Route path="/signup" component={SignUp} />
         <Route path="/login/patient" component={Login} />
         <Route path="/login/doctor" component={LoginDoctor} />
-       <Route path="/newday/" component={NewDay} />
+        <Route path="/newday/" component={NewDay} />
         <Route path="/myhomepage/" component={MyHomepage} />
         <Route path="/myhistory/" component={MyHistory} />
-
       </Switch>
     </div>
   );

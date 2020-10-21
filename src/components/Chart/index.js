@@ -1,7 +1,13 @@
-import React from 'react';
+import React from "react";
 import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
-} from 'recharts';
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+} from "recharts";
 
 /* const data = [
   {
@@ -27,8 +33,7 @@ import {
   },
 ]; */
 
-
-//     const patientHistory = useSelector(selectPatientHistory) 
+//     const patientHistory = useSelector(selectPatientHistory)
 // const bata =  patientHistory
 
 // console.log("bata", bata)
@@ -57,36 +62,35 @@ import {
 //   },
 // ];
 
-
-
 export default function index(props) {
+  //     const patientHistory = useSelector(selectPatientHistory)
+  // const bata =  patientHistory
 
-  //     const patientHistory = useSelector(selectPatientHistory) 
-// const bata =  patientHistory
+  // console.log("bata", bata)
+  console.log("chart props", props);
+  const data = props.data;
 
-// console.log("bata", bata)
-console.log("chart props", props)
-const data = props.data
-
-return (
+  return (
     <div>
       <LineChart
         width={500}
         height={300}
         data={data}
         margin={{
-          top: 5, right: 30, left: 20, bottom: 5,
+          top: 5,
+          right: 30,
+          left: 20,
+          bottom: 5,
         }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
+        <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
         <XAxis dataKey="date" />
-        <YAxis />
+        <YAxis type="number" domain={[0, 5]} />
         <Tooltip />
         <Legend />
         {/* <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} /> */}
         <Line type="monotone" dataKey="itchScore" stroke="#82ca9d" />
       </LineChart>
     </div>
-  )
+  );
 }
-

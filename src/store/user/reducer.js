@@ -1,14 +1,10 @@
-import {
-  LOG_OUT,
-  LOGIN_SUCCESS,
-  TOKEN_STILL_VALID,
-} from "./actions";
+import { LOG_OUT, LOGIN_SUCCESS, TOKEN_STILL_VALID } from "./actions";
 
- const initialState = {
-   token: localStorage.getItem("token"),
-   name: null,
-   email: null,
-    };
+const initialState = {
+  token: localStorage.getItem("token"),
+  name: null,
+  email: null,
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
