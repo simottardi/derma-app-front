@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./itchyButton.css";
 import { updateMyDay } from "../../store/patientHistory/actions";
+import { cloudName } from "../../config/constants";
 
 import { CloudinaryContext, Image } from "cloudinary-react";
-import { fetchPhotos, openUploadWidget } from "../../CloudinaryService";
+import { openUploadWidget } from "../../CloudinaryService";
 
 export default function ItchyButton(props) {
   const dispatch = useDispatch();
@@ -29,13 +30,15 @@ export default function ItchyButton(props) {
     event.preventDefault();
 
     console.log(
+      "submit form",
       score,
       date,
       note,
       image,
       medicationMorning,
       medicationAfternoon,
-      medicationEvening
+      medicationEvening,
+      images
     );
     dispatch(
       updateMyDay(date, {
@@ -44,31 +47,22 @@ export default function ItchyButton(props) {
         medicationAfternoon: medicationAfternoon,
         medicationEvening: medicationEvening,
         medicationMorning: medicationMorning,
-        image: image,
+        image: images[0],
       })
-    ); // scorre misstyped on purpose
+    );
   }
-
-  // console.log("patientDays", patientDays)
-  // console.log("props", props, "dayId", dayId, "dayScore", dayScore, "itchScore", itchScore)
-  // const [setScore,useScore] = useState(state.patientHistory)
-  // console.log("Button state", useScore)
-  // console.log("props", props)
-
-  //  console.log("med mor", medicationMorning)
-  //   console.log("med aft", medicationAfternoon)
-  //    console.log("med eve", medicationEvening)
 
   const beginUpload = (tag) => {
     const uploadOptions = {
-      cloudName: "derma-app",
+      cloudName: `${cloudName}`,
       tags: [tag],
       uploadPreset: "upload",
     };
 
     openUploadWidget(uploadOptions, (error, photos) => {
       if (!error) {
-        console.log(photos);
+        // console.log(photos);
+        // console.log(images);
         if (photos.event === "success") {
           setImages([...images, photos.info.public_id]);
         }
@@ -77,10 +71,6 @@ export default function ItchyButton(props) {
       }
     });
   };
-
-  useEffect(() => {
-    fetchPhotos("image", setImages);
-  }, []);
 
   return (
     <Form key={props.day.id}>
@@ -118,7 +108,7 @@ export default function ItchyButton(props) {
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label>Image</Form.Label>
+        <Form.Label>Image tag</Form.Label>
         <Form.Control
           value={image}
           onChange={(event) =>
@@ -129,7 +119,14 @@ export default function ItchyButton(props) {
         />
       </Form.Group>
       <Form.Group>
-        <CloudinaryContext cloudName="derma-app">
+        <Image
+          cloudName={cloudName}
+          publicId={image}
+          width="300"
+          crop="scale"
+        />
+        <p></p>
+        <CloudinaryContext cloudName={cloudName}>
           <Button onClick={() => beginUpload()}>Upload Image</Button>
           <section>
             {images.map((i) => (
@@ -173,8 +170,7 @@ export default function ItchyButton(props) {
           />
         </Form.Label>
       </Form.Group>
-
-      <Form.Group className="mt-5">
+      <Form.Group>
         <Button variant="primary" type="submit" onClick={submitForm}>
           Save changes
         </Button>

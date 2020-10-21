@@ -8,6 +8,9 @@ import { useHistory } from "react-router-dom";
 import "./itchyButton.css";
 import { selectToday } from "../../store/appState/selectors";
 import { createMyDay } from "../../store/patientHistory/actions";
+import { CloudinaryContext, Image } from "cloudinary-react";
+import { openUploadWidget } from "../../CloudinaryService";
+import { cloudName } from "../../config/constants";
 
 export default function NewDayForm() {
   const dispatch = useDispatch();
@@ -24,8 +27,8 @@ export default function NewDayForm() {
   const [medicationEvening, setDayMedicationEvening] = useState(false);
   const user = useSelector(selectUser);
   const idPatient = user.id;
+  const [images, setImages] = useState([]); // this is the cloudinary array
 
-  console.log("idPatient", idPatient);
   useEffect(() => {
     if (token === null) {
       history.push("/");
@@ -42,7 +45,8 @@ export default function NewDayForm() {
       image,
       medicationMorning,
       medicationAfternoon,
-      medicationEvening
+      medicationEvening,
+      setImages
     );
     dispatch(
       createMyDay(date, {
@@ -52,8 +56,8 @@ export default function NewDayForm() {
         medicationAfternoon: medicationAfternoon,
         medicationEvening: medicationEvening,
         medicationMorning: medicationMorning,
-        image: image,
         patientId: idPatient,
+        image: images[0],
       })
     );
 
@@ -65,6 +69,23 @@ export default function NewDayForm() {
     setDayMedicationAfternoon(false);
     setDayMedicationEvening(false);
   }
+  const beginUpload = (tag) => {
+    const uploadOptions = {
+      cloudName: { cloudName },
+      tags: [tag],
+      uploadPreset: "upload",
+    };
+
+    openUploadWidget(uploadOptions, (error, photos) => {
+      if (!error) {
+        if (photos.event === "success") {
+          setImages([...images, photos.info.public_id]);
+        }
+      } else {
+        console.log(error);
+      }
+    });
+  };
 
   return (
     <Container>
@@ -73,7 +94,7 @@ export default function NewDayForm() {
         <input
           type="date"
           max={today}
-          value={date} //Finally fixed tis display issue
+          value={date}
           min="2020-07-31"
           style={{ marginRight: 15 }}
           onChange={(event) =>
@@ -81,14 +102,13 @@ export default function NewDayForm() {
           }
         />
       </Form.Group>
-
       <Form.Group>
         <div className="dropdown">
           <button className="dropbtn">
             How much itchiness today? <strong>{`${score}`}</strong>
           </button>
           <select
-            value={`${score}`} //{SELECTED DATE} // itchiness score
+            value={`${score}`}
             onChange={(event) =>
               setScore(event.target.value) && console.log(event.target.value)
             }
@@ -115,7 +135,7 @@ export default function NewDayForm() {
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label>Image</Form.Label>
+        <Form.Label>Image tag</Form.Label>
         <Form.Control
           value={image}
           onChange={(event) =>
@@ -124,6 +144,23 @@ export default function NewDayForm() {
           type="text"
           placeholder={`${image}` || "Upload an image for this day"}
         />
+      </Form.Group>
+      <Form.Group>
+        <Image
+          cloudName={cloudName}
+          publicId={image}
+          width="300"
+          crop="scale"
+        />
+        <p></p>
+        <CloudinaryContext cloudName={cloudName}>
+          <Button onClick={() => beginUpload()}>Upload Image</Button>
+          <section>
+            {images.map((i) => (
+              <Image key={i} publicId={i} fetch-format="auto" quality="auto" />
+            ))}
+          </section>
+        </CloudinaryContext>
       </Form.Group>
       <Form.Group className="form-check-inline">
         <Form.Label className="form-check-label">
@@ -136,7 +173,6 @@ export default function NewDayForm() {
             defaultChecked={medicationMorning}
           />
         </Form.Label>
-
         <Form.Label className="form-check-label">
           Afternoon medication{" "}
           <Form.Control
@@ -147,7 +183,6 @@ export default function NewDayForm() {
             defaultChecked={medicationAfternoon}
           />
         </Form.Label>
-
         <Form.Label className="form-check-label">
           Evening medication{" "}
           <Form.Control
@@ -160,8 +195,7 @@ export default function NewDayForm() {
           />
         </Form.Label>
       </Form.Group>
-
-      <Form.Group className="mt-5">
+      <Form.Group>
         <Button variant="primary" type="submit" onClick={submitForm}>
           Save changes
         </Button>
