@@ -8,21 +8,19 @@ import MessageBox from "./components/MessageBox";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import MyHomepage from "./pages/MyHomepage";
+import NewDay from "./pages/NewDay";
+import MyHistory from "./pages/MyHistory";
 import Homepages from "./pages/Homepages";
-import HomepageDetails from "./pages/HomepageDetails";
 import LoginDoctor from "./pages/LoginDoctor";
 
 import { useDispatch, useSelector } from "react-redux";
 import { selectAppLoading } from "./store/appState/selectors";
 import { getUserWithStoredToken } from "./store/user/actions";
 
-require("dotenv")
-
-
+require("dotenv");
 
 function App() {
-
-  console.log("WHAT IS ENV", process.env.API_URL);
+  // console.log("WHAT IS ENV", process.env.API_URL);
 
   const dispatch = useDispatch();
   const isLoading = useSelector(selectAppLoading);
@@ -41,27 +39,12 @@ function App() {
         <Route path="/signup" component={SignUp} />
         <Route path="/login/patient" component={Login} />
         <Route path="/login/doctor" component={LoginDoctor} />
+        <Route path="/newday/" component={NewDay} />
         <Route path="/myhomepage/" component={MyHomepage} />
-        <Route path="/homepages/:id" component={HomepageDetails} />
+        <Route path="/myhistory/" component={MyHistory} />
       </Switch>
     </div>
   );
 }
 
 export default App;
-
-
-          //  <Button > login patient </Button>
-        //  <Button > login doctor </Button>
-        //  <Button > patient signup </Button>
-
-
-//   const Button = styled.button`
-//   /* Adapt the colors based on primary prop */
-//   background: ${props => props.primary ? "palevioletred" : "white"};
-//   color: ${props => props.primary ? "white" : "palevioletred"};
-//   font-size: 1em;
-//   margin: 1em;
-//   padding: 0.25em 1em;
-//   border: 2px solid palevioletred;
-//   border-radius: 3px;

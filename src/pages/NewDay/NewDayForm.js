@@ -1,30 +1,36 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
+import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
+import { selectToken, selectUser } from "../../store/user/selectors";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import "./itchyButton.css";
-import { updateMyDay } from "../../store/patientHistory/actions";
+import { selectToday } from "../../store/appState/selectors";
+import { createMyDay } from "../../store/patientHistory/actions";
 
-export default function ItchyButton(props) {
-  // const patientDays = useSelector(selectPatientHistory)
+export default function NewDayForm() {
   const dispatch = useDispatch();
-  // const day=props
-  // console.log("props", props)
-  // const dayId = props.dayId
-  // const dayScore = patientDays.filter(day => day.id===dayId)
-  const [score, setScore] = useState(props.day.itchScore || 0);
-  const date = props.day.date;
-  const [note, setDayNote] = useState(props.day.note || "");
-  const [image, setDayImage] = useState(props.day.image || "");
-  const [medicationMorning, setDayMedicationMorning] = useState(
-    props.day.medicationMorning
-  );
-  const [medicationAfternoon, setDayMedicationAfternoon] = useState(
-    props.day.medicationAfternoon
-  );
-  const [medicationEvening, setDayMedicationEvening] = useState(
-    props.day.medicationEvening
-  );
+  const token = useSelector(selectToken);
+  const today = useSelector(selectToday);
+  const history = useHistory();
+
+  const [score, setScore] = useState(0);
+  const [date, setDayDate] = useState(today);
+  const [note, setDayNote] = useState("");
+  const [image, setDayImage] = useState("");
+  const [medicationMorning, setDayMedicationMorning] = useState(false);
+  const [medicationAfternoon, setDayMedicationAfternoon] = useState(false);
+  const [medicationEvening, setDayMedicationEvening] = useState(false);
+  const user = useSelector(selectUser);
+  const idPatient = user.id;
+
+  console.log("idPatient", idPatient);
+  useEffect(() => {
+    if (token === null) {
+      history.push("/");
+    }
+  }, [token, history]);
 
   function submitForm(event) {
     event.preventDefault();
@@ -39,29 +45,43 @@ export default function ItchyButton(props) {
       medicationEvening
     );
     dispatch(
-      updateMyDay(date, {
+      createMyDay(date, {
+        date: date,
         itchScore: score,
         note: note,
         medicationAfternoon: medicationAfternoon,
         medicationEvening: medicationEvening,
         medicationMorning: medicationMorning,
         image: image,
+        patientId: idPatient,
       })
-    ); // scorre misstyped on purpose
+    );
+
+    setScore(0);
+    setDayDate(today);
+    setDayNote("");
+    setDayImage("");
+    setDayMedicationMorning(false);
+    setDayMedicationAfternoon(false);
+    setDayMedicationEvening(false);
   }
 
-  // console.log("patientDays", patientDays)
-  // console.log("props", props, "dayId", dayId, "dayScore", dayScore, "itchScore", itchScore)
-  // const [setScore,useScore] = useState(state.patientHistory)
-  // console.log("Button state", useScore)
-  // console.log("props", props)
-
-  //  console.log("med mor", medicationMorning)
-  //   console.log("med aft", medicationAfternoon)
-  //    console.log("med eve", medicationEvening)
   return (
-    <Form key={props.day.id}>
-      <h1 className="mt-5 mb-5">Edit your day {`${date}`}</h1>
+    <Container>
+      <Form.Group>
+        <label>Select the new day date</label>
+        <input
+          type="date"
+          max={today}
+          value={date} //Finally fixed tis display issue
+          min="2020-07-31"
+          style={{ marginRight: 15 }}
+          onChange={(event) =>
+            setDayDate(event.target.value) && console.log("note", date)
+          }
+        />
+      </Form.Group>
+
       <Form.Group>
         <div className="dropdown">
           <button className="dropbtn">
@@ -146,6 +166,6 @@ export default function ItchyButton(props) {
           Save changes
         </Button>
       </Form.Group>
-    </Form>
+    </Container>
   );
 }

@@ -1,88 +1,59 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../store/user/selectors";
+import { selectToday } from "../../store/appState/selectors";
+import { useHistory, Link } from "react-router-dom";
+import { fetchPatientHistory } from "../../store/patientHistory/actions";
+
 import Container from "react-bootstrap/Container";
-import Loading from "../../components/Loading";
-import { useHistory } from "react-router-dom";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import MyHomepageForm from "./MyHomepageForm";
-import StoryForm from "./StoryForm";
-import Homepage from "../../components/Homepage";
-import StoryCarousel from "../../components/StoryCarousel";
-import ItchyButton from "../../components/ItchyButton";
+import { Col, Button } from "react-bootstrap";
+import PatientCard from "../../components/PatientCard";
+import Chart from "../../components/Chart";
+import { selectPatientHistory } from "../../store/patientHistory/selectors";
 
 export default function MyHomepage() {
-  const { token, homepage, name,email, id, doctorId, address, createdAt } = useSelector(selectUser);
-  const [editMode, setEditMode] = useState(false);
-  const [postStoryMode, setpostStoryMode] = useState(false);
+  const { token, name } = useSelector(selectUser);
+  const patientHistory = useSelector(selectPatientHistory);
+  const today = useSelector(selectToday);
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  //console.log("today", today )
 
   if (token === null) {
-    console.log("token null")
+    //console.log("token null")
     history.push("/");
   }
 
-  // if (homepage === null) {
-  //   console.log("homepage null")
-  //   return <Loading />;
-  // }
+  useEffect(() => {
+    //console.log("Use effect  --> fetch patient history dispatched ")
+    dispatch(fetchPatientHistory());
+  }, [dispatch]);
 
-  // const displayButtons =
-  //   id === homepage.userId && editMode === false && postStoryMode === false;
+  const patientHistoryData = patientHistory.map((day) => {
+    return { date: `${day.date}`, itchScore: `${day.itchScore}` };
+  });
 
-  //   console.log("EDITMODE", editMode);
+  console.log("PH", patientHistory);
+  console.log("PHD", patientHistoryData);
+
+  const data = patientHistoryData.reverse();
+
   return (
-    <div>
-{/* testing this is working */}
-    <p>this is working</p>
-    {/* testing fetching the user and its data, will */}
-    
-    <p>welcome back <strong>{name}</strong></p>
-<p>email: {email}</p>
-<p>id: {id}</p>
-<p>doctorId: {doctorId}</p>
-<p>address: {address}</p>
-<p>Patient since:{createdAt}</p>
-
-
-
-<ItchyButton />
-    </div>
-
-    
+    <Container as={Col} md={{ span: 6, offset: 3 }} className="mt-5">
+      <h1>Patient homepage </h1>
+      <p>
+        Welcome back <strong>{name}</strong>
+      </p>
+      <p> Today is {today} </p>
+      <Link to="/newday" style={{ textAlign: "center" }}>
+        Click here to create a new day in your journal.
+      </Link>
+      <p></p>
+      <Chart data={data} />
+      <Button onClick={() => dispatch(fetchPatientHistory())}>Load more</Button>
+      <p></p>
+      <PatientCard />
+    </Container>
   );
 }
-
-      //  <Homepage
-      //   id={homepage.id}
-      //   title={homepage.title}
-      //   description={homepage.description}
-      //   backgroundColor={homepage.backgroundColor}
-      //   color={homepage.color}
-      //   showLink={false}
-      // />
-      // <Container>
-      //   {displayButtons ? (
-      //     <Card>
-      //       <Button onClick={() => setEditMode(true)}>Edit my page</Button>
-      //       <Button onClick={() => setpostStoryMode(true)} className="mt-2">
-      //         Post a cool story bro
-      //       </Button>
-      //     </Card>
-      //   ) : null}
-
-      //   {editMode ? (
-      //     <Card>
-      //       <MyHomepageForm />
-      //     </Card>
-      //   ) : null}
-
-      //   {postStoryMode ? (
-      //     <Card>
-      //       <StoryForm />
-      //     </Card>
-      //   ) : null}
-
-      //   <StoryCarousel homepage={homepage} />
-      // </Container>
