@@ -1,3 +1,4 @@
+import { cloudName } from "./config/constants";
 import { Cloudinary as CoreCloudinary, Util } from "cloudinary-core";
 
 export const url = (publicId, options) => {
@@ -14,7 +15,7 @@ export const openUploadWidget = (options, callback) => {
 export async function fetchPhotos(imageTag, setter) {
   console.log("fetching photo function called");
   const options = {
-    cloudName: "derma-app",
+    cloudName: { cloudName },
     format: "json",
     type: "list",
     version: Math.ceil(new Date().getTime() / 1000),
