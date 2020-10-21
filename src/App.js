@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 
 import { Switch, Route } from "react-router-dom";
@@ -17,6 +17,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectAppLoading } from "./store/appState/selectors";
 import { getUserWithStoredToken } from "./store/user/actions";
 
+import { CloudinaryContext } from "cloudinary-react";
+import { fetchPhotos, openUploadWidget } from "./CloudinaryService";
+
 require("dotenv");
 
 function App() {
@@ -24,6 +27,8 @@ function App() {
 
   const dispatch = useDispatch();
   const isLoading = useSelector(selectAppLoading);
+
+  const [images, setImages] = useState([]);
 
   useEffect(() => {
     dispatch(getUserWithStoredToken());
@@ -43,6 +48,15 @@ function App() {
         <Route path="/myhomepage/" component={MyHomepage} />
         <Route path="/myhistory/" component={MyHistory} />
       </Switch>
+
+      {/*Code below allows us to pop open the cloudinary widget anywhere in our app as long as that component is a child of the App component. */}
+      <CloudinaryContext cloudName="derma-app">
+        <section>
+          {images.map((i) => (
+            <img src={i} alt="" />
+          ))}
+        </section>
+      </CloudinaryContext>
     </div>
   );
 }
