@@ -1,4 +1,5 @@
 import { apiUrl, DEFAULT_PAGINATION_LIMIT  } from "../../config/constants";
+import { selectToken, /*  selectUser  */  } from "../user/selectors";
 import axios from "axios";
 import {
   appLoading,
@@ -25,15 +26,18 @@ export const fetchPatientHistorySuccess = moreDays => ({
 export const fetchPatientHistory = () => {
 
   return async (dispatch, getState) => {
+        const token = selectToken(getState());
+     if (token === null) return;
+     
       try{
    const patientsHistoryCount = getState().patientHistory.length;
     const id = getState().user.id;
     console.log("id", id)
     const response = await axios.get(
           `${apiUrl}/patient/${id}/history?limit=${DEFAULT_PAGINATION_LIMIT}&offset=${patientsHistoryCount}` 
-    )
-
-
+    ,{
+        headers: { Authorization: `Bearer ${token}` }
+    })
     // console.log("patient history", response.data);
     const moreDays = response.data.patientArrayDays;
     dispatch(fetchPatientHistorySuccess(moreDays));
@@ -45,6 +49,8 @@ export const fetchPatientHistory = () => {
 
 export const updateMyDay = ( date, data ) => {
   return async (dispatch, getState) => {
+            const token = selectToken(getState());
+     if (token === null) return;
         // const {token } = selectUser(getState());
     console.log('Data', data)
     dispatch(appLoading());
@@ -52,9 +58,11 @@ export const updateMyDay = ( date, data ) => {
     const reqDate = date
     const response = await axios.patch (
       `${apiUrl}/patient/${id}/daybydate`,
+      
       {
        date:reqDate,
-       data
+       data,
+// headers: { Authorization: `Bearer ${token}` }
       }
     );
     console.log(response);
@@ -70,6 +78,8 @@ export const createMyDay = ( date, data ) => {
   console.log("createMyDay was dispatched", date, data)
  
 return async (dispatch, getState) => {
+  const token = selectToken(getState());
+     if (token === null) return;
         // const {token } = selectUser(getState());
     // console.log('Data', data)
     dispatch(appLoading());
@@ -80,7 +90,8 @@ return async (dispatch, getState) => {
       `${apiUrl}/patient/${id}/daybydate`,
       {
        date:reqDate,
-       data
+       data,
+      //  headers: { Authorization: `Bearer ${token}` }
       }
     );
     console.log(response);

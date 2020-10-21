@@ -1,7 +1,7 @@
 import React, {  useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {Link} from "react-router-dom"
-import { Col} from "react-bootstrap";
+import { Col, Button} from "react-bootstrap";
 import { selectUser } from "../../store/user/selectors";
 import { selectToday } from "../../store/appState/selectors";
 import Container from "react-bootstrap/Container";
@@ -43,6 +43,7 @@ export default function MyHistory() {
         
           <Link to="/newday" style={{ textAlign: "center" }}>         
    Click here to create a new day in for your journal.</Link>
+   <p></p>
       
       {patientHistory.map(day => {
           return (
@@ -52,7 +53,8 @@ export default function MyHistory() {
  {isLoading ? (
           <em>Loading...</em>
         ) : (
-          <button onClick={() => dispatch(fetchPatientHistory())}>Load more</button>
+          
+          <Button onClick={() => dispatch(fetchPatientHistory())}>Load more</Button>
         )}
 
       </Container>
