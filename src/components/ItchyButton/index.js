@@ -1,17 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./itchyButton.css";
 import { updateMyDay } from "../../store/patientHistory/actions";
 
+import { CloudinaryContext, Image } from "cloudinary-react";
+import { fetchPhotos, openUploadWidget } from "../../CloudinaryService";
+
 export default function ItchyButton(props) {
-  // const patientDays = useSelector(selectPatientHistory)
   const dispatch = useDispatch();
-  // const day=props
-  // console.log("props", props)
-  // const dayId = props.dayId
-  // const dayScore = patientDays.filter(day => day.id===dayId)
   const [score, setScore] = useState(props.day.itchScore || 0);
   const date = props.day.date;
   const [note, setDayNote] = useState(props.day.note || "");
@@ -25,6 +23,7 @@ export default function ItchyButton(props) {
   const [medicationEvening, setDayMedicationEvening] = useState(
     props.day.medicationEvening
   );
+  const [images, setImages] = useState([]); // this is the cloudinary array
 
   function submitForm(event) {
     event.preventDefault();
@@ -59,6 +58,30 @@ export default function ItchyButton(props) {
   //  console.log("med mor", medicationMorning)
   //   console.log("med aft", medicationAfternoon)
   //    console.log("med eve", medicationEvening)
+
+  const beginUpload = (tag) => {
+    const uploadOptions = {
+      cloudName: "derma-app",
+      tags: [tag],
+      uploadPreset: "upload",
+    };
+
+    openUploadWidget(uploadOptions, (error, photos) => {
+      if (!error) {
+        console.log(photos);
+        if (photos.event === "success") {
+          setImages([...images, photos.info.public_id]);
+        }
+      } else {
+        console.log(error);
+      }
+    });
+  };
+
+  useEffect(() => {
+    fetchPhotos("image", setImages);
+  }, []);
+
   return (
     <Form key={props.day.id}>
       <h1 className="mt-5 mb-5">Edit your day {`${date}`}</h1>
@@ -104,6 +127,16 @@ export default function ItchyButton(props) {
           type="text"
           placeholder={`${image}` || "Upload an image for this day"}
         />
+      </Form.Group>
+      <Form.Group>
+        <CloudinaryContext cloudName="derma-app">
+          <Button onClick={() => beginUpload()}>Upload Image</Button>
+          <section>
+            {images.map((i) => (
+              <Image key={i} publicId={i} fetch-format="auto" quality="auto" />
+            ))}
+          </section>
+        </CloudinaryContext>
       </Form.Group>
       <Form.Group className="form-check-inline">
         <Form.Label className="form-check-label">

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../store/user/selectors";
 import { selectToday } from "../../store/appState/selectors";
@@ -11,9 +11,13 @@ import PatientCard from "../../components/PatientCard";
 import Chart from "../../components/Chart";
 import { selectPatientHistory } from "../../store/patientHistory/selectors";
 
+import { CloudinaryContext, Image } from "cloudinary-react";
+import { fetchPhotos, openUploadWidget } from "../../CloudinaryService";
+
 export default function MyHomepage() {
   const { token, name } = useSelector(selectUser);
   const patientHistory = useSelector(selectPatientHistory);
+  const [images, setImages] = useState([]);
   const today = useSelector(selectToday);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -34,10 +38,35 @@ export default function MyHomepage() {
     return { date: `${day.date}`, itchScore: `${day.itchScore}` };
   });
 
-  console.log("PH", patientHistory);
-  console.log("PHD", patientHistoryData);
+  // console.log("PH", patientHistory);
+  // console.log("PHD", patientHistoryData);
 
   const data = patientHistoryData.reverse();
+
+  const beginUpload = (tag) => {
+    const uploadOptions = {
+      cloudName: "derma-app",
+      tags: [tag],
+      uploadPreset: "upload",
+    };
+
+    openUploadWidget(uploadOptions, (error, photos) => {
+      if (!error) {
+        console.log(photos);
+        if (photos.event === "success") {
+          setImages([...images, photos.info.public_id]);
+        }
+      } else {
+        console.log(error);
+      }
+    });
+  };
+
+  useEffect(() => {
+    fetchPhotos("image", setImages);
+  }, []);
+
+  console.log("images", images); //"jmuggr5usynt8nl4dp1h"
 
   return (
     <Container as={Col} md={{ span: 6, offset: 3 }} className="mt-5">
@@ -52,6 +81,17 @@ export default function MyHomepage() {
       <p></p>
       <Chart data={data} />
       <Button onClick={() => dispatch(fetchPatientHistory())}>Load more</Button>
+      <p></p>
+
+      <CloudinaryContext cloudName="derma-app">
+        <Button onClick={() => beginUpload()}>Upload Image</Button>
+        <section>
+          {images.map((i) => (
+            <Image key={i} publicId={i} fetch-format="auto" quality="auto" />
+          ))}
+        </section>
+      </CloudinaryContext>
+
       <p></p>
       <PatientCard />
     </Container>
