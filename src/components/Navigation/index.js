@@ -13,18 +13,33 @@ export default function Navigation() {
 
   const loginLogoutControls = token ? <LoggedIn /> : <LoggedOut />;
 
+  /*         <footer id="sticky-footer" className="py-2 bg-dark text-white-50">
+        <div className="container text-center"></div> */
+
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar
+      bg="light"
+      expand="lg"
+      className="navbar navbar-dark bg-secondary bg-dark "
+    >
       <Navbar.Brand as={NavLink} to="/">
         DermaApp
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav style={{ width: "100%" }} fill>
-         {!token ? <NavbarItem path="/" linkText="Home" /> : null}
-         {token ? <NavbarItem path="/myhomepage" linkText="My Page" /> : null}
-         {token ? <NavbarItem path="/myhistory" linkText="My history" />: null}
-         {loginLogoutControls}
+          {!token ? <NavbarItem path="/" linkText="Home" /> : null}
+          {token ? (
+            <NavbarItem
+              path="/myhomepage"
+              linkText="My Page"
+              className="bg-dark text-white-50"
+            />
+          ) : null}
+          {token ? (
+            <NavbarItem path="/myhistory" linkText="My history" />
+          ) : null}
+          {loginLogoutControls}
         </Nav>
       </Navbar.Collapse>
     </Navbar>

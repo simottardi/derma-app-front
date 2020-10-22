@@ -88,118 +88,133 @@ export default function NewDayForm() {
   };
 
   return (
-    <Container>
-      <Form.Group>
-        <label>Select the new day date</label>
-        <input
-          type="date"
-          max={today}
-          value={date}
-          min="2020-07-31"
-          style={{ marginRight: 15 }}
-          onChange={(event) =>
-            setDayDate(event.target.value) && console.log("note", date)
-          }
-        />
-      </Form.Group>
-      <Form.Group>
-        <div className="dropdown">
-          <button className="dropbtn">
-            How much itchiness today? <strong>{`${score}`}</strong>
-          </button>
-          <select
-            value={`${score}`}
-            onChange={(event) =>
-              setScore(event.target.value) && console.log(event.target.value)
-            }
-            className="dropdown-content"
-          >
-            <option>0</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </select>
+    <Container className="pt-2 pb-2 text-black">
+      {/*     <div className="card-deck"> */}
+      <div className="card shadow-sm">
+        <div className="card-header">
+          <h4 className="my-0 font-weight-normal text-primary">
+            New entry: {date}
+          </h4>
         </div>
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Note</Form.Label>
-        <Form.Control
-          value={note}
-          onChange={(event) =>
-            setDayNote(event.target.value) && console.log("note", note)
-          }
-          type="text"
-          placeholder={`${note}` || "What is your note for the day?"}
-        />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Image tag</Form.Label>
-        <Form.Control
-          value={image}
-          onChange={(event) =>
-            setDayImage(event.target.value) && console.log("image url", image)
-          }
-          type="text"
-          placeholder={`${image}` || "Upload an image for this day"}
-        />
-      </Form.Group>
-      <Form.Group>
-        <Image
-          cloudName={cloudName}
-          publicId={image}
-          width="300"
-          crop="scale"
-        />
-        <p></p>
-        <CloudinaryContext cloudName={cloudName}>
-          <Button onClick={() => beginUpload()}>Upload Image</Button>
-          <section>
-            {images.map((i) => (
-              <Image key={i} publicId={i} fetch-format="auto" quality="auto" />
-            ))}
-          </section>
-        </CloudinaryContext>
-      </Form.Group>
-      <Form.Group className="form-check-inline">
-        <Form.Label className="form-check-label">
-          Morning medication{" "}
-          <Form.Control
-            className="form-check-input"
-            value={medicationMorning}
-            onClick={(event) => setDayMedicationMorning(!medicationMorning)}
-            type="checkbox"
-            defaultChecked={medicationMorning}
-          />
-        </Form.Label>
-        <Form.Label className="form-check-label">
-          Afternoon medication{" "}
-          <Form.Control
-            className="form-check-input"
-            value={medicationAfternoon}
-            onClick={(event) => setDayMedicationAfternoon(!medicationAfternoon)}
-            type="checkbox"
-            defaultChecked={medicationAfternoon}
-          />
-        </Form.Label>
-        <Form.Label className="form-check-label">
-          Evening medication{" "}
-          <Form.Control
-            className="form-check-input"
-            label="Evening medication"
-            value={medicationEvening}
-            onClick={(event) => setDayMedicationEvening(!medicationEvening)}
-            type="checkbox"
-            defaultChecked={medicationEvening}
-          />
-        </Form.Label>
-      </Form.Group>
-      <Form.Group>
-        <Button variant="primary" type="submit" onClick={submitForm}>
-          Save changes
-        </Button>
-      </Form.Group>
+        <div className="card-body text-center">
+          <Form.Group>
+            <Form.Label>Select the new day date</Form.Label>
+            <input
+              type="date"
+              max={today}
+              value={date}
+              min="2020-07-31"
+              style={{ marginRight: 15 }}
+              onChange={(event) =>
+                setDayDate(event.target.value) && console.log("note", date)
+              }
+            />
+          </Form.Group>
+          <Form.Group>
+            <div className="form-group">
+              <label for="exampleFormControlSelect1">
+                How much itchiness today? <strong>{`${score}`}</strong>
+              </label>
+              <select
+                value={`${score}`}
+                onChange={(event) =>
+                  setScore(event.target.value) &&
+                  console.log(event.target.value)
+                }
+                className="form-control"
+              >
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+          </Form.Group>
+
+          <Form.Group>
+            <Form.Label>Note</Form.Label>
+            <div className="form-group">
+              <textarea
+                className="form-control"
+                rows="3"
+                value={note}
+                onChange={(event) =>
+                  setDayNote(event.target.value) && console.log("note", note)
+                }
+                type="text"
+                placeholder={`${note}` || "What is your note for the day?"}
+              ></textarea>
+            </div>
+          </Form.Group>
+          <Form.Group>
+            <Image
+              cloudName={cloudName}
+              publicId={image}
+              width="300"
+              crop="scale"
+              className="img-thumbnail"
+            />
+
+            <CloudinaryContext cloudName={cloudName}>
+              <Button onClick={() => beginUpload()}>Upload Image</Button>
+              <section>
+                {images.map((i) => (
+                  <Image
+                    key={i}
+                    publicId={i}
+                    fetch-format="auto"
+                    quality="auto"
+                  />
+                ))}
+              </section>
+            </CloudinaryContext>
+          </Form.Group>
+          <Form.Group className="form-check-inline">
+            <Form.Label className="form-check-label">
+              Morning medication{" "}
+              <Form.Control
+                className="form-check-input"
+                value={medicationMorning}
+                onClick={(event) => setDayMedicationMorning(!medicationMorning)}
+                type="checkbox"
+                defaultChecked={medicationMorning}
+              />
+            </Form.Label>
+            <Form.Label className="form-check-label">
+              Afternoon medication{" "}
+              <Form.Control
+                className="form-check-input"
+                value={medicationAfternoon}
+                onClick={(event) =>
+                  setDayMedicationAfternoon(!medicationAfternoon)
+                }
+                type="checkbox"
+                defaultChecked={medicationAfternoon}
+              />
+            </Form.Label>
+            <Form.Label className="form-check-label">
+              Evening medication{" "}
+              <Form.Control
+                className="form-check-input"
+                label="Evening medication"
+                value={medicationEvening}
+                onClick={(event) => setDayMedicationEvening(!medicationEvening)}
+                type="checkbox"
+                defaultChecked={medicationEvening}
+              />
+            </Form.Label>
+          </Form.Group>
+          <Form.Group>
+            <Button variant="success" type="submit" onClick={submitForm}>
+              Save changes
+            </Button>
+          </Form.Group>
+        </div>
+      </div>
+      {/* 
+      </div> */}
     </Container>
   );
 }

@@ -12,6 +12,7 @@ import NewDay from "./pages/NewDay";
 import MyHistory from "./pages/MyHistory";
 import Homepages from "./pages/Homepages";
 import LoginDoctor from "./pages/LoginDoctor";
+import Footer from "./components/Footer";
 
 import { useDispatch, useSelector } from "react-redux";
 import { selectAppLoading } from "./store/appState/selectors";
@@ -43,6 +44,7 @@ function App() {
         <Route path="/myhomepage/" component={MyHomepage} />
         <Route path="/myhistory/" component={MyHistory} />
       </Switch>
+      <Footer />
     </div>
   );
 }
