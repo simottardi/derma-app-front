@@ -38,7 +38,7 @@ export const fetchPatientHistory = () => {
 
       console.log("id", id);
       const response = await axios.get(
-        `${apiUrl}/patient/${id}/history?limit=${DEFAULT_PAGINATION_LIMIT}&offset=${patientsHistoryCount}`,
+        `${apiUrl}/patients/${id}/history?limit=${DEFAULT_PAGINATION_LIMIT}&offset=${patientsHistoryCount}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -56,26 +56,41 @@ export const updateMyDay = (date, data) => {
   return async (dispatch, getState) => {
     const token = selectToken(getState());
     if (token === null) return;
-    // const {token } = selectUser(getState());
     console.log("Data", data);
     dispatch(appLoading());
-    const id = getState().user.id;
-    const reqDate = date;
-    const response = await axios.patch(
-      `${apiUrl}/patient/${id}/daybydate`,
-
-      {
-        date: reqDate,
-        data,
-        // headers: { Authorization: `Bearer ${token}` }
+    try {
+      const id = getState().user.id;
+      const reqDate = date;
+      const response = await axios.patch(
+        `${apiUrl}/patients/${id}/patientdays`,
+        {
+          date: reqDate,
+          data,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      ); // {
+      //   date: reqDate,
+      //   data,
+      // }
+      // );
+      console.log(response);
+      dispatch(myDayUpdated(response.data.updateDay));
+      dispatch(
+        showMessageWithTimeout("success", false, "update successfull", 3000)
+      );
+      dispatch(appDoneLoading());
+    } catch (error) {
+      if (error.response) {
+        // console.log(error.response.data.message);
+        dispatch(setMessage("danger", true, error.response.data.message));
+      } else {
+        // console.log(error.message);
+        dispatch(setMessage("danger", true, error.message));
       }
-    );
-    console.log(response);
-    dispatch(myDayUpdated(response.data.updateDay));
-    dispatch(
-      showMessageWithTimeout("success", false, "update successfull", 3000)
-    );
-    dispatch(appDoneLoading());
+      dispatch(appDoneLoading());
+    }
   };
 };
 
@@ -91,11 +106,16 @@ export const createMyDay = (date, data) => {
     try {
       const id = getState().user.id;
       const reqDate = date;
-      const response = await axios.post(`${apiUrl}/patient/${id}/daybydate`, {
-        date: reqDate,
-        data,
-        //  headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await axios.post(
+        `${apiUrl}/patients/${id}/patientdays`,
+        {
+          date: reqDate,
+          data,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       console.log("log day created", response.data.newDay);
       dispatch(myDayCreated(response.data.newDay));
       // dispatch(myDayUpdated(response.data.updateDay));
