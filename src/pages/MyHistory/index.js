@@ -33,27 +33,31 @@ export default function MyHistory() {
   }, [dispatch]);
 
   return (
-    <div>
-      <Container as={Col} md={{ span: 6, offset: 3 }} className="mt-5">
-        <h1> Patient history</h1>
-        <p> Welcome to your journal Today is {today} </p>
+    <Container as={Col} md={{ span: 6, offset: 3 }} className="mt-2">
+      <h1 className="text-white"> Patient history</h1>
+      <p className="text-white"> Welcome to your journal!</p>
+      <p className="text-white">
+        Today is <strong>{today}</strong>
+      </p>
+      <Link to="/newday" className="text-white">
+        <button
+          type="button"
+          className="btn btn-lg btn-block btn-outline-light"
+        >
+          Click here to create a new day in your journal.
+        </button>
+      </Link>
 
-        <Link to="/newday" style={{ textAlign: "center" }}>
-          Click here to create a new day in for your journal.
-        </Link>
-        <p></p>
-
-        {patientHistory.map((day) => {
-          return <ItchyButton key={day.id} day={day} />;
-        })}
-        {isLoading ? (
-          <em>Loading...</em>
-        ) : (
-          <Button onClick={() => dispatch(fetchPatientHistory())}>
-            Load more
-          </Button>
-        )}
-      </Container>
-    </div>
+      {patientHistory.map((day) => {
+        return <ItchyButton key={day.id} day={day} />;
+      })}
+      {isLoading ? (
+        <em>Loading...</em>
+      ) : (
+        <Button onClick={() => dispatch(fetchPatientHistory())}>
+          Load more
+        </Button>
+      )}
+    </Container>
   );
 }
