@@ -2,16 +2,16 @@
 
 ## What this app is about
 
-[Find out here for a working version](https://XXXX.netlify.app/) //The app is not deployed at the moment
+<!--- [Find out here for a working version](https://XXXX.netlify.app/) he app is not deployed at the moment-->
 
 DermaApp is a service for helping patients track their eczema and medications. The app aims to make it easier for patients to understand the trends of their disease and the efficacy of their medications. The app focuses on the patient, but we have the ambiton to include doctors in the next releases, and bring to the patient the professional help they seek.
 
 ## How it works
 
 Patient can log in and add an entry for they "eczema journal". Each entry represent a day, and the patient can register -   - - [ ] how itchy they feel,
- - - [ ] personal notes for that day
- - - [ ] whether they took their medications
- - - [ ] and can upload a picture of their eczema for that day
+ - - personal notes for that day
+ - - whether they took their medications
+ - - and can upload a picture of their eczema for that day
  The patient can see on a graph how their itchyness changes through the days.
  
 ## Table of contents
