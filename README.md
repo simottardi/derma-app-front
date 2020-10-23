@@ -8,12 +8,12 @@ DermaApp is a service for helping patients track their eczema and medications. T
 
 ## How it works
 
-Patient can log in and add an entry for they "eczema journal". Each entry represent a day, and the patient can register -   
+Patient can log in and add an entry for they "eczema journal". Each entry represent a day, and the patient can register:   
 - how itchy they feel,
 - personal notes for that day
 - whether they took their medications
 - and can upload a picture of their eczema for that day
- The patient can see on a graph how their itchyness changes through the days.
+- a graph shows the patients how their itchyness changes through the days.
  
 ## Table of contents
 
@@ -29,7 +29,8 @@ Patient can log in and add an entry for they "eczema journal". Each entry repres
 
 ## App demo
 
-//![App demo](https://github.com/tdijkmans/savoristas-front/blob/master/readme-assets/Post-a-palette.gif) //
+Coming soon
+<-- //![App demo](https://github.com/tdijkmans/savoristas-front/blob/master/readme-assets/Post-a-palette.gif) // -->
 
 ## Used technologies and concepts
 
@@ -39,7 +40,7 @@ Patient can log in and add an entry for they "eczema journal". Each entry repres
 - [Redux for state management]
 - [Authentication]
 - [Express as web app framework]
-  - [REST API]
+ - [REST API]
 - [Sequelize as ORM]
 - [Bootstrap as a styling library]⭐
 - [Clodify as a web service for fetching and displaying images] ⭐
@@ -64,16 +65,15 @@ The goal of this project is to build a full-stack app, practicing known and expl
 
 ## User stories
 
-- As a page visitor, I can sign up and log in as a user. I must register before I can post food palettes and recipes
-- As a visitor, I am able see existing food palettes and recipes as a gallery
-- As a user, I am able to post new food palettes
-- As a user, I am able to post new recipes
-- As a visitor, I can see recipes of interest and get their details for cooking.
-- As a visitor, I can select food palettes and filter for corresponding recipes
-- _planned:_ As a user, I can like recipes and foodpaletes
-- _planned:_ As a user, I can bookmark recipes and foodpaletes
+- As a page visitor, I can sign up and log in as a patient. I must register before I can post my entries.
+- As a visitor, I am able see the past entries in my heistory.
+- As a user, I am able to post a new entry for each day, up to today.
+- As a user, I am able to edit my entries.
+- As a visitor, I can see how my itchyness, represented by a 'itch score' changes with time.
+- _planned:_ As a user, I can see my medications, prescriptions and doctors details.
+- _planned:_ As a doctor, I can login, check on my patients, and make new prescriptions.
 
-_This project is work in progress. Some features still need to be implemented and revised. Any suggestions or feedback is welcome, please let me know [here](https://www.linkedin.com/in/tdijkmans/)_.
+_This project is work in progress. Some features still need to be implemented and revised. Any suggestions or feedback is welcome, please let me know [here](https://www.linkedin.com/in/simone-gottardi-090872a8/)_.
 
 ## Project Board
 
