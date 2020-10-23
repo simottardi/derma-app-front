@@ -40,12 +40,12 @@ export default function MyHistory() {
         Today is <strong>{today}</strong>
       </p>
       <Link to="/newday" className="text-white">
-        <button
+        <Button
           type="button"
-          className="btn btn-lg btn-block btn-outline-light"
+          className="mb-2 btn btn-lg btn-block btn-outline-light"
         >
           Click here to create a new day in your journal.
-        </button>
+        </Button>
       </Link>
 
       {patientHistory.map((day) => {

@@ -28,11 +28,12 @@ export default (state = initialState, action) => {
     case MYDAY_CREATED: {
       console.log(
         " MyDayCreated in the reducer",
+        "action.payload:",
         action.payload,
         "state",
         state
       );
-      return state.unshift(action.payload);
+      return [action.payload, ...state];
     }
 
     default:

@@ -28,6 +28,18 @@ export default function ItchyButton(props) {
 
   function submitForm(event) {
     event.preventDefault();
+
+    console.log(
+      "submit form",
+      score,
+      date,
+      note,
+      image,
+      medicationMorning,
+      medicationAfternoon,
+      medicationEvening,
+      images
+    );
     dispatch(
       updateMyDay(date, {
         itchScore: score,
