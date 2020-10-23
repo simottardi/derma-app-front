@@ -35,13 +35,13 @@ Coming soon
 
 ## Used technologies and concepts
 
-👀👇 **Click links to see code samples in this project** 👇👀
+<!--👀👇 **Click links to see code samples in this project** 👇👀 -->
 
 - [React for UI building]
 - [Redux for state management]
 - [Authentication]
 - [Express as web app framework]
- - [REST API]
+- [REST API]
 - [Sequelize as ORM]
 - [Bootstrap as a styling library]⭐
 - [Clodify as a web service for fetching and displaying images] ⭐
