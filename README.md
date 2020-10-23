@@ -31,9 +31,10 @@ A graph shows the patients how their itchyness changes with time.
 
 ## App demo
 
-!!! Note: this is not the final version of the DemoVideo
+![App Demo](https://github.com/simottardi/derma-app-front/blob/development/ReactApp.gif)
 
-https://youtu.be/JY_YoSeU_AI
+Watch the short video with comments:
+https://youtu.be/V12mLer4KM0
 
 ## Used technologies and concepts
 
