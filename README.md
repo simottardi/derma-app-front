@@ -30,7 +30,6 @@ Patient can log in and add an entry for they "eczema journal". Each entry repres
 ## App demo
 
 Coming soon
-<-- //![App demo](https://github.com/tdijkmans/savoristas-front/blob/master/readme-assets/Post-a-palette.gif) // -->
 
 ## Used technologies and concepts
 
