@@ -8,10 +8,11 @@ DermaApp is a service for helping patients track their eczema and medications. T
 
 ## How it works
 
-Patient can log in and add an entry for they "eczema journal". Each entry represent a day, and the patient can register -   - - [ ] how itchy they feel,
- - - personal notes for that day
- - - whether they took their medications
- - - and can upload a picture of their eczema for that day
+Patient can log in and add an entry for they "eczema journal". Each entry represent a day, and the patient can register -   
+- how itchy they feel,
+- personal notes for that day
+- whether they took their medications
+- and can upload a picture of their eczema for that day
  The patient can see on a graph how their itchyness changes through the days.
  
 ## Table of contents
