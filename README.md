@@ -31,7 +31,7 @@ A graph shows the patients how their itchyness changes with time.
 
 ## App demo
 
-Coming soon
+<iframe src="https://drive.google.com/file/d/11EypKVORDNg6nJgeR1dNB1a81B4vsNv6/preview" width="640" height="480"></iframe>
 
 ## Used technologies and concepts
 
