@@ -81,7 +81,7 @@ export default function SignUp() {
           </Button>
         </Form.Group>
 
-        <Link to="/login">
+        <Link to="/login/patient">
           <Button variant="primary" className="btn-block btn-md btn-light">
             Click here to log in
           </Button>

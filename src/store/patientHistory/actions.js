@@ -70,11 +70,7 @@ export const updateMyDay = (date, data) => {
         {
           headers: { Authorization: `Bearer ${token}` },
         }
-      ); // {
-      //   date: reqDate,
-      //   data,
-      // }
-      // );
+      );
       console.log(response);
       dispatch(myDayUpdated(response.data.updateDay));
       dispatch(

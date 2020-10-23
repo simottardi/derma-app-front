@@ -7,7 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import "./itchyButton.css";
 import { selectToday } from "../../store/appState/selectors";
-import { createMyDay } from "../../store/patientHistory/actions";
+import {
+  createMyDay,
+  fetchPatientHistory,
+} from "../../store/patientHistory/actions";
 import { CloudinaryContext, Image } from "cloudinary-react";
 import { openUploadWidget } from "../../CloudinaryService";
 import { cloudName } from "../../config/constants";
@@ -29,11 +32,18 @@ export default function NewDayForm() {
   const idPatient = user.id;
   const [images, setImages] = useState([]); // this is the cloudinary array
 
+  console.log("cloudname", cloudName);
+
   useEffect(() => {
     if (token === null) {
       history.push("/");
     }
   }, [token, history]);
+
+  useEffect(() => {
+    //console.log("Use effect  --> fetch patient history dispatched ")
+    dispatch(fetchPatientHistory());
+  }, [dispatch]);
 
   function submitForm(event) {
     event.preventDefault();
@@ -71,7 +81,7 @@ export default function NewDayForm() {
   }
   const beginUpload = (tag) => {
     const uploadOptions = {
-      cloudName: { cloudName },
+      cloudName: `${cloudName}`,
       tags: [tag],
       uploadPreset: "upload",
     };
@@ -149,13 +159,12 @@ export default function NewDayForm() {
             </div>
           </Form.Group>
           <Form.Group>
-            <Image
+            {/*             <Image
               cloudName={cloudName}
               publicId={image}
-              width="300"
+              width="600"
               crop="scale"
-              className="img-thumbnail"
-            />
+            /> */}
 
             <CloudinaryContext cloudName={cloudName}>
               <Button onClick={() => beginUpload()}>Upload Image</Button>
@@ -165,7 +174,9 @@ export default function NewDayForm() {
                     key={i}
                     publicId={i}
                     fetch-format="auto"
-                    quality="auto"
+                    width="300"
+                    crop="scale"
+                    className="mt-1 img-thumbnail"
                   />
                 ))}
               </section>
