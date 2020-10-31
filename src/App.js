@@ -13,6 +13,7 @@ import MyHistory from "./pages/MyHistory";
 import Homepages from "./pages/Homepages";
 import LoginDoctor from "./pages/LoginDoctor";
 import Footer from "./components/Footer";
+import DoctorHomepage from "./pages/DoctorHomepage";
 
 import { useDispatch, useSelector } from "react-redux";
 import { selectAppLoading } from "./store/appState/selectors";
@@ -43,6 +44,7 @@ function App() {
         <Route path="/newday/" component={NewDay} />
         <Route path="/myhomepage/" component={MyHomepage} />
         <Route path="/myhistory/" component={MyHistory} />
+        <Route path="/doctor/homepage" component={DoctorHomepage} />
       </Switch>
       <Footer />
     </div>
