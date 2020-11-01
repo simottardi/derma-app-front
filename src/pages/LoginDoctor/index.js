@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import { login } from "../../store/doctor/actions";
 import { selectTokenDoctor } from "../../store/doctor/selectors";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Col } from "react-bootstrap";
 
 export default function SignUp() {
@@ -65,11 +65,6 @@ export default function SignUp() {
             Log in
           </Button>
         </Form.Group>
-        {/*         <Link to="/signup" style={{ textAlign: "center" }}>
-          <Button variant="primary" className="btn-block btn-md btn-light">
-            Click here to sign up
-          </Button>
-        </Link> */}
       </Form>
     </Container>
   );

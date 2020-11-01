@@ -8,14 +8,11 @@ import { selectTokenDoctor } from "../../store/doctor/selectors";
 import NavbarItem from "./NavbarItem";
 import LoggedIn from "./LoggedIn";
 import LoggedOut from "./LoggedOut";
+
 export default function Navigation() {
   const token = useSelector(selectToken);
   const tokenDoctor = useSelector(selectTokenDoctor);
   console.log("token", token, "tokenDoc", tokenDoctor);
-  // const loginLogoutControls = token ? <LoggedIn /> : <LoggedOut />;
-
-  /*         <footer id="sticky-footer" className="py-2 bg-dark text-white-50">
-        <div className="container text-center"></div> */
 
   const loginLogoutControls =
     token || tokenDoctor ? <LoggedIn /> : <LoggedOut />;

@@ -18,6 +18,7 @@ import DoctorHomepage from "./pages/DoctorHomepage";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAppLoading } from "./store/appState/selectors";
 import { getUserWithStoredToken } from "./store/user/actions";
+import { getDoctorWithStoredToken } from "./store/doctor/actions";
 
 require("dotenv");
 
@@ -29,6 +30,10 @@ function App() {
 
   useEffect(() => {
     dispatch(getUserWithStoredToken());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getDoctorWithStoredToken());
   }, [dispatch]);
 
   return (
