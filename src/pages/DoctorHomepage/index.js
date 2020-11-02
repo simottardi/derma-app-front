@@ -50,15 +50,15 @@ export default function MyHomepage() {
           Today is <strong>{today}</strong>
         </p>
         <p>Appointment list</p>
-        {/* {doctorAppointments.map((appointment) => {
+        {doctorAppointments.map((appointment) => {
           return (
             <div key={appointment.id}>
               <p>{appointment.id}</p>
-              <p>appointment.datetime</p>
-              <p>appointment.patientId</p>
+              <p>appointment.datetime {appointment.datetime}</p>
+              <p>appointment.patientId {appointment.patientId}</p>
             </div>
           );
-        })} */}
+        })}
 
         <p>Patients upadates</p>
         {/*        <Link to="/newday" className="text-white mb-2">

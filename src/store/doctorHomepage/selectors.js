@@ -1,1 +1,1 @@
-export const selectDoctorAppointments = (state) => state.doctorAppointments;
+export const selectDoctorAppointments = (state) => state.doctorHomepage;

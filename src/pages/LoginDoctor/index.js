@@ -12,14 +12,14 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const token = useSelector(selectTokenDoctor);
+  const tokenDoctor = useSelector(selectTokenDoctor);
   const history = useHistory();
 
   useEffect(() => {
-    if (token !== null) {
-      history.push("/");
+    if (tokenDoctor !== null) {
+      history.push("/doctor/homepage");
     }
-  }, [token, history]);
+  }, [tokenDoctor, history]);
 
   function submitForm(event) {
     console.log("hi");
