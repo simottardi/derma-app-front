@@ -4,6 +4,8 @@ import { selectDoctor } from "../../store/doctor/selectors";
 import { selectToday } from "../../store/appState/selectors";
 import { useHistory, Link } from "react-router-dom";
 import { fetchDoctorAppointments } from "../../store/doctorHomepage/actions";
+import AppointmentCard from "../../components/AppointmentCard";
+import PatientCardForDoctor from "../../components/PatientCardForDoctor";
 
 import Container from "react-bootstrap/Container";
 import { Col } from "react-bootstrap";
@@ -52,46 +54,26 @@ export default function MyHomepage() {
         <p>Appointment list</p>
         {doctorAppointments.map((appointment) => {
           return (
+            <AppointmentCard key={appointment.id} appointment={appointment} />
+          );
+          /*           (
             <div key={appointment.id}>
               <p>{appointment.id}</p>
               <p>appointment.datetime {appointment.datetime}</p>
               <p>appointment.patientId {appointment.patientId}</p>
             </div>
-          );
+          ); */
         })}
 
-        <p>Patients upadates</p>
-        {/*        <Link to="/newday" className="text-white mb-2">
-          <button
-            type="button"
-            className="mb-2 btn btn-lg btn-block btn-outline-light"
-          >
-            Click here to create a new day in your journal.
-          </button>
-        </Link>
-        <PatientCard />
-      </Container>
-      <Container>
-        <div className="container mb-2">
-          <div className="card-deck text-center">
-            <div className="card shadow-sm">
-              <div className="card-header">
-                <h4 className="font-weight-normal ">Your Eczema Chart</h4>
-              </div>
-              <div className="card-body">
-                <Chart data={data} />
-
-                <button
-                  type="button"
-                  onClick={() => dispatch(fetchPatientHistory())}
-                  className="btn btn-lg btn-block btn-outline-primary"
-                >
-                  Load more
-                </button>
-              </div>
-            </div>
-          </div>
-        </div> */}
+        <p>Patients</p>
+        {doctorAppointments.map((appointment) => {
+          return (
+            <PatientCardForDoctor
+              key={appointment.id}
+              appointment={appointment}
+            />
+          );
+        })}
       </Container>
     </Container>
   );
