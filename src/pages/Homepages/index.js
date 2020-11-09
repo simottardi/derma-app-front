@@ -7,8 +7,11 @@ import { selectUser } from "../../store/user/selectors";
 import { useHistory } from "react-router-dom";
 import PatientCard from "../../components/PatientCard";
 
+/* import { selectDoctor } from "../../store/doctor/selectors";
+ */
 export default function HomePages() {
   const { token } = useSelector(selectUser);
+  /*   const { tokenDoctor } = useSelector(selectDoctor); */
 
   const history = useHistory();
 
@@ -17,6 +20,19 @@ export default function HomePages() {
 
     history.push("/myhomepage/");
   }
+  // !! this is breaking the app
+  /*   if (tokenDoctor !== null) {
+    console.log("tokenDoctor not null");
+    history.push("/doctor/homepage");
+  } else if (token !== null) {
+    console.log("token not null");
+
+    history.push("/myhomepage/");
+  } else {
+    console.log("token null");
+
+    history.push("/");
+  } */
 
   return (
     <>

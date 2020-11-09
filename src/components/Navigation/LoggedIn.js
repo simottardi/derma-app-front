@@ -29,14 +29,14 @@ export default function LoggedIn() {
       {token ? (
         <Button
           onClick={() => dispatch(logOut())}
-          class="btn mb-2 btn-sm btn-danger"
+          className="btn mb-2 btn-sm btn-danger"
         >
           Logout
         </Button>
       ) : (
         <Button
           onClick={() => dispatch(logOutDoc())}
-          class="btn mb-2 btn-sm btn-danger"
+          className="btn mb-2 btn-sm btn-danger"
         >
           Logout
         </Button>

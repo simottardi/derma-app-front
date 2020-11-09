@@ -1,5 +1,6 @@
 import { apiUrl, DEFAULT_PAGINATION_LIMIT } from "../../config/constants";
 import { selectToken /*  selectUser  */ } from "../user/selectors";
+import { selectTokenDoctor } from "../doctor/selectors";
 import axios from "axios";
 import {
   appLoading,
@@ -133,6 +134,34 @@ export const createMyDay = (date, data) => {
         dispatch(setMessage("danger", true, error.message));
       }
       dispatch(appDoneLoading());
+    }
+  };
+};
+
+export const fetchDoctorPatientHistory = (patientId) => {
+  return async (dispatch, getState) => {
+    const token = selectTokenDoctor(getState());
+    const id = patientId;
+    if (token === null || id === undefined) return;
+
+    try {
+      const patientsHistoryCount = getState().patientHistory.length;
+
+      // console.log("id", id);
+      const response = await axios.get(
+        `${apiUrl}/doctors/patient/${id}/history?limit=${DEFAULT_PAGINATION_LIMIT}&offset=${patientsHistoryCount}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      // console.log("patient history", response.data);
+      const moreDays = response.data.patientArrayDays;
+      dispatch(fetchPatientHistorySuccess(moreDays));
+      dispatch(
+        showMessageWithTimeout("success", true, "your request was successful")
+      );
+    } catch (e) {
+      console.log(e.message);
     }
   };
 };

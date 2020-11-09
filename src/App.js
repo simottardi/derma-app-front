@@ -14,6 +14,7 @@ import Homepages from "./pages/Homepages";
 import LoginDoctor from "./pages/LoginDoctor";
 import Footer from "./components/Footer";
 import DoctorHomepage from "./pages/DoctorHomepage";
+import DoctorPatient from "./pages/DoctorPatient";
 
 import { useDispatch, useSelector } from "react-redux";
 import { selectAppLoading } from "./store/appState/selectors";
@@ -50,6 +51,7 @@ function App() {
         <Route path="/myhomepage/" component={MyHomepage} />
         <Route path="/myhistory/" component={MyHistory} />
         <Route path="/doctor/homepage" component={DoctorHomepage} />
+        <Route path="/doctor/patient/:id" component={DoctorPatient} />
       </Switch>
       <Footer />
     </div>

@@ -1,41 +1,29 @@
 import { FETCH_DOCTOR_APPOINTMENTS_SUCCESS } from "./actions";
-import { MYDAY_UPDATED } from "./actions";
-import { MYDAY_CREATED } from "./actions";
+import { FETCH_DOCTOR_PATIENTS_SUCCESS } from "./actions";
 
-const initialState = [];
+const initialState = {
+  appointments: [],
+  patients: [],
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case FETCH_DOCTOR_APPOINTMENTS_SUCCESS: {
-      console.log(" fetched appointments the reducer", action.payload);
+      console.log(" fetched appointments in the reducer", action.payload);
 
-      return [...state, ...action.payload];
+      return {
+        ...state,
+        appointments: [...state.appointments, ...action.payload],
+      };
     }
-    // case MYDAY_UPDATED: {
-    //   console.log(
-    //     " MyDayUpdated in the reducer",
-    //     action.payload,
-    //     "state",
-    //     state
-    //   );
-    //   return state.map((day) => {
-    //     if (day.id !== action.payload.id) {
-    //       return day;
-    //     }
-    //     return { ...action.payload };
-    //   });
-    // }
-    // case MYDAY_CREATED: {
-    //   console.log(
-    //     " MyDayCreated in the reducer",
-    //     "action.payload:",
-    //     action.payload,
-    //     "state",
-    //     state
-    //   );
-    //   return [action.payload, ...state];
-    // }
+    case FETCH_DOCTOR_PATIENTS_SUCCESS: {
+      console.log(" fetched patients in the reducer", action.payload);
 
+      return {
+        ...state,
+        patients: [...state.patients, ...action.payload],
+      };
+    }
     default:
       return state;
   }
