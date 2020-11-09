@@ -85,7 +85,7 @@ export default function ItchyButton(props) {
             <Form key={props.day.id}>
               <Form.Group>
                 <div className="form-group">
-                  <label for="exampleFormControlSelect1">
+                  <label lhtmlFor="exampleFormControlSelect1">
                     How much itchiness today? <strong>{`${score}`}</strong>
                   </label>
                   <select

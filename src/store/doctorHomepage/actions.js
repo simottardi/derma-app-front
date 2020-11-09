@@ -1,32 +1,22 @@
 import { apiUrl, DEFAULT_PAGINATION_LIMIT } from "../../config/constants";
 import { selectTokenDoctor } from "../doctor/selectors";
-import { selectToken } from "../user/selectors";
+
 import axios from "axios";
-import {
-  appLoading,
-  appDoneLoading,
-  showMessageWithTimeout,
-  setMessage,
-} from "../appState/actions";
+import { showMessageWithTimeout, setMessage } from "../appState/actions";
 
 export const FETCH_DOCTOR_APPOINTMENTS_SUCCESS =
   "FETCH_DOCTOR_APPOINTMENTS_SUCCESS";
-export const MYDAY_UPDATED = "MYDAY_UPDATED";
-export const MYDAY_CREATED = "MYDAY_CREATED";
+
+export const FETCH_DOCTOR_PATIENTS_SUCCESS = "FETCH_DOCTOR_PATIENTS _SUCCESS";
 
 export const fetchDoctorAppointmentsSuccess = (appointmentsArray) => ({
   type: FETCH_DOCTOR_APPOINTMENTS_SUCCESS,
   payload: appointmentsArray,
 });
 
-export const myDayUpdated = (day) => ({
-  type: MYDAY_UPDATED,
-  payload: day,
-});
-
-export const myDayCreated = (day) => ({
-  type: MYDAY_CREATED,
-  payload: day,
+export const fetchDoctorPatientsSuccess = (patientsArray) => ({
+  type: FETCH_DOCTOR_PATIENTS_SUCCESS,
+  payload: patientsArray,
 });
 
 export const fetchDoctorAppointments = () => {
@@ -36,11 +26,12 @@ export const fetchDoctorAppointments = () => {
     if (token === null || id === undefined) return;
 
     try {
-      // const doctorAppoinmentsCount = getState().doctorAppointments.length;
+      const doctorAppoinmentsCount = getState().doctorHomepage.appointments
+        .length;
 
-      console.log("id", id);
+      console.log("id", id, "doctorAppoinmentsCount", doctorAppoinmentsCount);
       const response = await axios.get(
-        `${apiUrl}/doctors/${id}/appointments?limit=${DEFAULT_PAGINATION_LIMIT}&offset=${0}`,
+        `${apiUrl}/doctors/${id}/appointments?limit=${DEFAULT_PAGINATION_LIMIT}&offset=${doctorAppoinmentsCount}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -48,38 +39,11 @@ export const fetchDoctorAppointments = () => {
       console.log("doctors appointments", response.data);
       const appointmentsArray = response.data.appointments;
       dispatch(fetchDoctorAppointmentsSuccess(appointmentsArray));
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
-};
-
-export const updateMyDay = (date, data) => {
-  return async (dispatch, getState) => {
-    const token = selectToken(getState());
-    if (token === null) return;
-    console.log("Data", data);
-    dispatch(appLoading());
-    try {
-      const id = getState().user.id;
-      const reqDate = date;
-      const response = await axios.patch(
-        `${apiUrl}/patients/${id}/patientdays`,
-        {
-          date: reqDate,
-          data,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      console.log(response);
-      dispatch(myDayUpdated(response.data.updateDay));
       dispatch(
-        showMessageWithTimeout("success", false, "update successfull", 3000)
+        showMessageWithTimeout("success", true, "your request was successful")
       );
-      dispatch(appDoneLoading());
     } catch (error) {
+      console.log(error.message);
       if (error.response) {
         // console.log(error.response.data.message);
         dispatch(setMessage("danger", true, error.response.data.message));
@@ -87,46 +51,35 @@ export const updateMyDay = (date, data) => {
         // console.log(error.message);
         dispatch(setMessage("danger", true, error.message));
       }
-      dispatch(appDoneLoading());
     }
   };
 };
 
-export const createMyDay = (date, data) => {
-  console.log("createMyDay was dispatched", date, data);
-
+export const fetchDoctorPatients = () => {
   return async (dispatch, getState) => {
-    const token = selectToken(getState());
-    if (token === null) return;
-    // const {token } = selectUser(getState());
-    // console.log('Data', data)
-    dispatch(appLoading());
+    const token = selectTokenDoctor(getState());
+    const id = getState().user.id;
+    if (token === null || id === undefined) return;
+
     try {
-      const id = getState().user.id;
-      const reqDate = date;
-      const response = await axios.post(
-        `${apiUrl}/patients/${id}/patientdays`,
-        {
-          date: reqDate,
-          data,
-        },
+      const doctorPatientsCount = getState().doctorHomepage.patients.length;
+
+      console.log("id", id);
+      const response = await axios.get(
+        `${apiUrl}/doctors/${id}/patients?limit=${DEFAULT_PAGINATION_LIMIT}&offset=${doctorPatientsCount}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log("log day created", response.data.newDay);
-      dispatch(myDayCreated(response.data.newDay));
-      // dispatch(myDayUpdated(response.data.updateDay));
+      console.log("doctors patients", response.data);
+      const patientsArray = response.data.patients;
+      console.log("patients data action", patientsArray);
+      dispatch(fetchDoctorPatientsSuccess(patientsArray));
       dispatch(
-        showMessageWithTimeout(
-          "success",
-          false,
-          "Day successfully created",
-          3000
-        )
+        showMessageWithTimeout("success", true, "your request was successful")
       );
-      dispatch(appDoneLoading());
     } catch (error) {
+      console.log(error.message);
       if (error.response) {
         // console.log(error.response.data.message);
         dispatch(setMessage("danger", true, error.response.data.message));
@@ -134,7 +87,6 @@ export const createMyDay = (date, data) => {
         // console.log(error.message);
         dispatch(setMessage("danger", true, error.message));
       }
-      dispatch(appDoneLoading());
     }
   };
 };

@@ -122,7 +122,7 @@ export default function NewDayForm() {
           </Form.Group>
           <Form.Group>
             <div className="form-group">
-              <label for="exampleFormControlSelect1">
+              <label htmlFor="exampleFormControlSelect1">
                 How much itchiness today? <strong>{`${score}`}</strong>
               </label>
               <select
