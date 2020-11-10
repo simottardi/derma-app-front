@@ -6,6 +6,7 @@ import Container from "react-bootstrap/Container";
 import { selectUser } from "../../store/user/selectors";
 import { useHistory } from "react-router-dom";
 import PatientCard from "../../components/PatientCard";
+import { Button } from "@material-ui/core";
 
 /* import { selectDoctor } from "../../store/doctor/selectors";
  */
@@ -41,6 +42,12 @@ export default function HomePages() {
       </Jumbotron>
       <Container className="text-center text-light h-100">
         <PatientCard />
+        <Button variant="contained" color="secondary">
+          Click Me!
+        </Button>
+        <Button variant="contained" color="primary">
+          Click Me!
+        </Button>
       </Container>
     </>
   );

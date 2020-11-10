@@ -8,9 +8,11 @@ import Container from "react-bootstrap/Container";
 import { useHistory } from "react-router-dom";
 import { fetchPatientHistory } from "../../store/patientHistory/actions";
 import { selectPatientHistory } from "../../store/patientHistory/selectors";
+import Chart from "../../components/Chart";
 
 import { selectAppLoading } from "../../store/appState/selectors";
 import ItchyButton from "../../components/ItchyButton";
+import { Grid } from "@material-ui/core";
 
 export default function MyHistory() {
   const { token } = useSelector(selectUser);
@@ -32,8 +34,14 @@ export default function MyHistory() {
     dispatch(fetchPatientHistory());
   }, [dispatch]);
 
+  const patientHistoryData = patientHistory.map((day) => {
+    return { date: `${day.date}`, itchScore: `${day.itchScore}` };
+  });
+
+  const data = patientHistoryData.reverse();
+
   return (
-    <Container as={Col} md={{ span: 6, offset: 3 }} className="mt-2">
+    <Container /* as={Col} md={{ span: 6, offset: 3 }} className="mt-2" */>
       <h1 className="text-white"> Patient history</h1>
       <p className="text-white"> Welcome to your journal!</p>
       <p className="text-white">
@@ -47,10 +55,26 @@ export default function MyHistory() {
           Click here to create a new day in your journal.
         </Button>
       </Link>
+      <div className="card-body">
+        <Chart data={data} />
 
-      {patientHistory.map((day) => {
-        return <ItchyButton key={day.id} day={day} />;
-      })}
+        <button
+          type="button"
+          onClick={() => dispatch(fetchPatientHistory())}
+          className="btn btn-lg btn-block btn-outline-primary"
+        >
+          Load more
+        </button>
+      </div>
+      <Grid container spacing="2">
+        {patientHistory.map((day) => {
+          return (
+            <Grid item xs={12} sm={4}>
+              <ItchyButton key={day.id} day={day} />{" "}
+            </Grid>
+          );
+        })}
+      </Grid>
       {isLoading ? (
         <em>Loading...</em>
       ) : (
