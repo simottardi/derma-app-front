@@ -13,7 +13,7 @@ import NewDay from "./pages/NewDay";
 import MyHistory from "./pages/MyHistory";
 import Homepages from "./pages/Homepages";
 import LoginDoctor from "./pages/LoginDoctor";
-import Footer from "./components/Footer";
+
 import DoctorHomepage from "./pages/DoctorHomepage";
 import DoctorPatient from "./pages/DoctorPatient";
 
@@ -59,7 +59,6 @@ function App() {
           <Route path="/doctor/homepage" component={DoctorHomepage} />
           <Route path="/doctor/patient/:id" component={DoctorPatient} />
         </Switch>
-        <Footer />
       </div>
     </ThemeProvider>
   );

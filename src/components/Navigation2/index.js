@@ -14,9 +14,11 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
 import MenuIcon from "@material-ui/icons/Menu";
 
 import Menu from "@material-ui/core/Menu";
+import { red } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,6 +35,10 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+  },
+  selected: {
+    flexGrow: 1,
+    color: red,
   },
 }));
 
@@ -61,8 +67,14 @@ export default function Navigation() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
+          {/*     <NavbarItem path="/" linkText="DermaApp" /> */}
+
           <Typography variant="h6" className={classes.title}>
-            DermaApp
+            <NavLink to="/" className="selected">
+              <Button variant="contained" color="primary" disableElevation>
+                DermaApp
+              </Button>
+            </NavLink>
           </Typography>
 
           <div>

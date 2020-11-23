@@ -7,15 +7,6 @@ export default function PatientCard() {
     selectUser
   );
 
-  if (token === null) {
-    console.log("toke null");
-    return (
-      <div>
-        <p>Please log in to read and edit your data</p>
-      </div>
-    );
-  }
-
   return (
     <div className="container pt-12 mb-4 ">
       <div className="card-deck text-center">
