@@ -52,11 +52,16 @@ export default function SignUp() {
 
   return (
     <Container align="center" maxWidth="sm" fixed style={{ marginTop: 12 }}>
-      <Typography variant="h5" align="left" style={{ marginBottom: 12 }}>
-        Patient Login
-      </Typography>
-      <div>
-        <Grid container direction="column" justify="center" alignItems="center">
+      <Grid container direction="column" justify="center" alignItems="center">
+        <Typography
+          variant="h5"
+          justify="center"
+          align="center"
+          style={{ marginBottom: 12 }}
+        >
+          Patient Login
+        </Typography>
+        <div>
           <form
             noValidate
             autoComplete="off" /* styles={{ margin: 1, width: "25ch" }} */
@@ -115,8 +120,8 @@ export default function SignUp() {
               Click here to sign up
             </Button>
           </Link>
-        </Grid>
-      </div>
+        </div>
+      </Grid>
     </Container>
   );
 }

@@ -18,11 +18,20 @@ import {
 } from "../../store/doctorHomepage/selectors";
 
 import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
+import {
+  Card,
+  Grid,
+  CardActions,
+  CardContent,
+  Button,
+  Typography,
+  colors,
+} from "@material-ui/core";
+/* import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import { Grid } from "@material-ui/core"; */
 
 const useStyles = makeStyles({
   root: {
@@ -71,93 +80,206 @@ export default function MyHomepage() {
   const classes = useStyles();
 
   return (
-    <Container>
-      <Container as={Col} md={{ span: 6, offset: 3 }} className="mt-2 mb-2 ">
-        <h1 className="text-white">Doctor homepage </h1>
-        <h5 className="text-white">
+    <Container align="center" maxWidth="sm" fixed style={{ marginTop: 12 }}>
+      <Grid
+        container
+        direction="column"
+        justify="center"
+        alignItems="center"
+        style={{ marginTop: 12 }}
+      >
+        <Typography
+          variant="h5"
+          justify="center"
+          align="center"
+          style={{ marginBottom: 12 }}
+        >
+          Doctor Homepage
+        </Typography>
+        <Typography
+          variant="body"
+          justify="center"
+          align="center"
+          style={{ marginBottom: 12 }}
+        >
           Welcome back <strong> {name}</strong>
-        </h5>
-        <p className="text-white">
+        </Typography>
+        <Typography
+          variant="body"
+          justify="center"
+          align="center"
+          style={{ marginBottom: 12 }}
+        >
           Today is <strong>{today}</strong>
-        </p>
-        <p>Appointment list</p>
-        {doctorAppointments.map((appointment) => {
-          return (
-            /* (
-            <AppointmentCard key={appointment.id} appointment={appointment} />
-          ); */
-            <Card className={classes.root} key={appointment.id}>
-              <CardContent>
-                <Typography variant="h5" component="h2">
-                  {appointment.name}
-                </Typography>
-
-                <Typography
-                  className={classes.title}
-                  color="textSecondary"
-                  gutterBottom
+        </Typography>
+        <Card
+          style={{
+            paddingTop: 12,
+            paddingBottom: 12,
+            paddingRight: 12,
+            paddingLeft: 12,
+            backgroundColor: "#decbf5",
+            marginTop: 6,
+            marginBottom: 12,
+          }}
+        >
+          {" "}
+          <Typography
+            variant="h6"
+            justify="left"
+            align="left"
+            style={{ marginBottom: 12, MarginTop: 6 }}
+          >
+            Appointment list
+          </Typography>
+          {doctorAppointments.map((appointment) => {
+            return (
+              <Card
+                className={classes.root}
+                key={appointment.id}
+                style={{
+                  marginBottom: 12,
+                  paddingTop: 0,
+                  paddingBottom: 0,
+                  backgroundColor: "#c09deb",
+                }}
+              >
+                <CardContent
+                  style={{
+                    paddingBottom: 3,
+                  }}
                 >
-                  Date and time: {appointment.datetime}, Id:{appointment.id},
-                  Patient Id:{appointment.patientId},
-                </Typography>
-              </CardContent>
-            </Card>
-          );
-        })}
-        {isLoading ? (
-          <em>Loading...</em>
-        ) : (
-          <Button onClick={() => dispatch(fetchDoctorAppointments())}>
-            Load more
-          </Button>
-        )}
-        <p>Patients</p>
-        {doctorPatients.map((docPatient /* , i */) => {
-          return (
-            /*             <PatientCardForDoctor
-              key={docPatient.id}
-              docPatient={docPatient}
-              divider={i !== doctorPatients.length - 1}
-            /> 
-             * https://stackoverflow.com/questions/61408004/render-method-component-bug-invalid-hook-call-hooks-can-only-be-called-inside *
-            */
-
-            <Card className={classes.root} key={docPatient.id}>
-              <CardContent>
-                <Typography variant="h5" component="h2">
-                  {docPatient.name}
-                </Typography>
-
-                <Typography
-                  className={classes.title}
-                  color="textSecondary"
-                  gutterBottom
-                >
-                  Id:{docPatient.id}, Email:{docPatient.email}, Address:{" "}
-                  {docPatient.address}
-                </Typography>
-
-                <CardActions>
-                  <Link
-                    to={`/doctor/patient/${docPatient.id}`}
-                    className="text-white mb-2"
+                  <Typography
+                    className={classes.title}
+                    color="textSecondary"
+                    gutterBottom
                   >
-                    <Button size="small">Learn More</Button>
-                  </Link>
-                </CardActions>
-              </CardContent>
-            </Card>
-          );
-        })}
-
+                    Date and time: {appointment.datetime},
+                    <br />
+                    Patient Id:{appointment.patientId}, <br />
+                    Id:{appointment.id},
+                  </Typography>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </Card>
         {isLoading ? (
-          <em>Loading...</em>
+          <Typography
+            variant="h5"
+            justify="left"
+            align="left"
+            style={{ marginBottom: 12, MarginTop: 6 }}
+          >
+            Loading ...
+          </Typography>
         ) : (
-          <Button onClick={() => dispatch(fetchDoctorPatients())}>
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ marginBottom: 15 }}
+            onClick={() => dispatch(fetchDoctorAppointments())}
+          >
             Load more
           </Button>
         )}
-      </Container>
+
+        <Card
+          fullWidt
+          style={{
+            paddingTop: 12,
+            paddingBottom: 12,
+            paddingRight: 12,
+            paddingLeft: 12,
+            backgroundColor: "#decbf5",
+            marginTop: 6,
+            marginBottom: 12,
+          }}
+        >
+          {" "}
+          <Typography
+            variant="h6"
+            justify="left"
+            align="left"
+            style={{ marginBottom: 12, MarginTop: 6 }}
+          >
+            Patient List
+          </Typography>
+          {doctorPatients.map((docPatient /* , i */) => {
+            return (
+              <Card
+                className={classes.root}
+                key={docPatient.id}
+                style={{
+                  marginBottom: 12,
+                  paddingTop: 0,
+                  paddingBottom: 0,
+                  backgroundColor: "#c09deb",
+                }}
+              >
+                <CardContent
+                  style={{
+                    paddingBottom: 0,
+                  }}
+                >
+                  <CardActions>
+                    <Grid
+                      container
+                      direction="row"
+                      justify="space-between"
+                      alignItems="baseline"
+                    >
+                      <Typography variant="h5" component="h2" align="left">
+                        {docPatient.name}
+                      </Typography>
+                      <Link
+                        to={`/doctor/patient/${docPatient.id}`}
+                        className="text-white mb-2"
+                      >
+                        <Button
+                          size="small"
+                          variant="contained"
+                          color="primary"
+                        >
+                          Learn More
+                        </Button>
+                      </Link>
+                    </Grid>
+                  </CardActions>
+
+                  <Typography
+                    className={classes.title}
+                    color="textSecondary"
+                    gutterBottom
+                  >
+                    Id:{docPatient.id}, Email:{docPatient.email}, Address:{" "}
+                    {docPatient.address}
+                  </Typography>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </Card>
+        {isLoading ? (
+          <Typography
+            variant="h5"
+            justify="left"
+            align="left"
+            style={{ marginBottom: 12, MarginTop: 6 }}
+          >
+            Loading ...
+          </Typography>
+        ) : (
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ marginBottom: 15 }}
+            onClick={() => dispatch(fetchDoctorAppointments())}
+          >
+            Load more
+          </Button>
+        )}
+      </Grid>
     </Container>
   );
 }
