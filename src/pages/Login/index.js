@@ -1,12 +1,27 @@
 import React, { useState, useEffect } from "react";
-import Form from "react-bootstrap/Form";
-import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
+
+import Container from "@material-ui/core/Container";
+
 import { login } from "../../store/user/actions";
 import { selectToken } from "../../store/user/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
-import { Col } from "react-bootstrap";
+
+import {
+  Typography,
+  Button,
+  FormControl,
+  Input,
+  Grid,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  elements: {
+    textAlign: "center",
+    margin: theme.spacing(2),
+  },
+}));
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
@@ -14,6 +29,10 @@ export default function SignUp() {
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const history = useHistory();
+
+  const classes = useStyles();
+
+  console.log("email", email, "password", password);
 
   useEffect(() => {
     if (token !== null) {
@@ -32,45 +51,77 @@ export default function SignUp() {
   }
 
   return (
-    <Container>
-      <Form as={Col} md={{ span: 6, offset: 3 }} className="mt-2 mb-3">
-        <h1 className="mt-5 mb-5 text-white">Login</h1>
-        <Form.Group controlId="formBasicEmail">
-          <Form.Label className="text-white">Email address</Form.Label>
-          <Form.Control
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            type="email"
-            placeholder="Enter email"
-            required
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formBasicPassword">
-          <Form.Label className="text-white">Password</Form.Label>
-          <Form.Control
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            type="password"
-            placeholder="Password"
-            required
-          />
-        </Form.Group>
-        <Form.Group className="mt-2">
-          <Button
-            type="submit"
-            onClick={submitForm}
-            className="btn-block btn-md btn-light "
+    <Container align="center" maxWidth="sm" fixed style={{ marginTop: 12 }}>
+      <Grid container direction="column" justify="center" alignItems="center">
+        <Typography
+          variant="h5"
+          justify="center"
+          align="center"
+          style={{ marginBottom: 12 }}
+        >
+          Patient Login
+        </Typography>
+        <div>
+          <form
+            noValidate
+            autoComplete="off" /* styles={{ margin: 1, width: "25ch" }} */
           >
-            Log in
-          </Button>
-        </Form.Group>
-        <Link to="/signup" style={{ textAlign: "center" }}>
-          <Button variant="primary" className="btn-block btn-md btn-light">
-            Click here to sign up
-          </Button>
-        </Link>
-      </Form>
+            <FormControl>
+              {/*             <InputLabel htmlFor="my-input">Email address</InputLabel> */}
+              <Input
+                className={classes.elements}
+                id="this-email"
+                /* aria-describedby="my-helper-text" */
+                label="Email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                margin="normal"
+                variant="outlined"
+                required
+                placeholder="Email"
+                fullWidth
+              />
+
+              {/*        <InputLabel htmlFor="this-password">Password</InputLabel> */}
+              <Input
+                className={classes.elements}
+                id="this-password"
+                /*   aria-describedby="my-helper-text" */
+                label="Password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                margin="normal"
+                variant="outlined"
+                type="password"
+                placeholder="Password"
+                required
+                fullWidth
+              />
+
+              <Button
+                className={classes.elements}
+                type="submit"
+                onClick={submitForm}
+                variant="contained"
+                color="primary"
+                fullWidth
+              >
+                Log in
+              </Button>
+            </FormControl>
+          </form>
+          <Link to="/signup" style={{ textAlign: "center" }}>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.elements}
+              fullWidth
+            >
+              Click here to sign up
+            </Button>
+          </Link>
+        </div>
+      </Grid>
     </Container>
   );
 }

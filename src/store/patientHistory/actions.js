@@ -154,7 +154,7 @@ export const fetchDoctorPatientHistory = (patientId) => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      // console.log("patient history", response.data);
+      console.log("patient history", response.data);
       const moreDays = response.data.patientArrayDays;
       dispatch(fetchPatientHistorySuccess(moreDays));
       dispatch(
