@@ -79,6 +79,15 @@ export default function MyHomepage() {
 
   const classes = useStyles();
 
+  // testing how to display the date
+
+  const dateString = "2021-03-05T08:09:00.000Z";
+  const myDateSplit = dateString.split("T");
+  const myDate = myDateSplit[0];
+  const myTimeSplit = myDateSplit[1].split(".");
+  const myTime = myTimeSplit[0];
+  console.log("date string", dateString, "myDate", myDate, "myTime", myTime);
+
   return (
     <Container align="center" maxWidth="sm" fixed style={{ marginTop: 12 }}>
       <Grid
@@ -133,6 +142,21 @@ export default function MyHomepage() {
             Appointment list
           </Typography>
           {doctorAppointments.map((appointment) => {
+            //Splitting the date and time string into date and time
+            const dateString = appointment.datetime;
+            const myDateSplit = dateString.split("T");
+            const myDate = myDateSplit[0];
+            const myTimeSplit = myDateSplit[1].split(".");
+            const myTime = myTimeSplit[0];
+            console.log(
+              "date string",
+              dateString,
+              "myDate",
+              myDate,
+              "myTime",
+              myTime
+            );
+            //creating the card object
             return (
               <Card
                 className={classes.root}
@@ -154,7 +178,9 @@ export default function MyHomepage() {
                     color="textSecondary"
                     gutterBottom
                   >
-                    Date and time: {appointment.datetime},
+                    Date: {myDate}
+                    <br />
+                    Time: {myTime}
                     <br />
                     Patient Id:{appointment.patientId}, <br />
                     Id:{appointment.id},
