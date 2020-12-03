@@ -79,15 +79,6 @@ export default function MyHomepage() {
 
   const classes = useStyles();
 
-  // testing how to display the date
-
-  const dateString = "2021-03-05T08:09:00.000Z";
-  const myDateSplit = dateString.split("T");
-  const myDate = myDateSplit[0];
-  const myTimeSplit = myDateSplit[1].split(".");
-  const myTime = myTimeSplit[0];
-  console.log("date string", dateString, "myDate", myDate, "myTime", myTime);
-
   return (
     <Container align="center" maxWidth="sm" fixed style={{ marginTop: 12 }}>
       <Grid
@@ -148,14 +139,6 @@ export default function MyHomepage() {
             const myDate = myDateSplit[0];
             const myTimeSplit = myDateSplit[1].split(".");
             const myTime = myTimeSplit[0];
-            console.log(
-              "date string",
-              dateString,
-              "myDate",
-              myDate,
-              "myTime",
-              myTime
-            );
             //creating the card object
             return (
               <Card
@@ -182,8 +165,9 @@ export default function MyHomepage() {
                     <br />
                     Time: {myTime}
                     <br />
-                    Patient Id:{appointment.patientId}, <br />
-                    Id:{appointment.id},
+                    Patient Id:{appointment.patientId}
+                    <br />
+                    Id:{appointment.id}
                   </Typography>
                 </CardContent>
               </Card>
