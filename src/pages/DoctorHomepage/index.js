@@ -133,6 +133,13 @@ export default function MyHomepage() {
             Appointment list
           </Typography>
           {doctorAppointments.map((appointment) => {
+            //Splitting the date and time string into date and time
+            const dateString = appointment.datetime;
+            const myDateSplit = dateString.split("T");
+            const myDate = myDateSplit[0];
+            const myTimeSplit = myDateSplit[1].split(".");
+            const myTime = myTimeSplit[0];
+            //creating the card object
             return (
               <Card
                 className={classes.root}
@@ -154,10 +161,13 @@ export default function MyHomepage() {
                     color="textSecondary"
                     gutterBottom
                   >
-                    Date and time: {appointment.datetime},
+                    Date: {myDate}
                     <br />
-                    Patient Id:{appointment.patientId}, <br />
-                    Id:{appointment.id},
+                    Time: {myTime}
+                    <br />
+                    Patient Id:{appointment.patientId}
+                    <br />
+                    Id:{appointment.id}
                   </Typography>
                 </CardContent>
               </Card>
