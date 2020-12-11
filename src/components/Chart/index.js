@@ -12,12 +12,7 @@ import {
 } from "recharts";
 
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import {
-  Typography,
-  Accordion,
-  AccordionDetails,
-  Container,
-} from "@material-ui/core";
+import { Typography, Accordion, AccordionDetails } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MuiAccordionSummary from "@material-ui/core/AccordionSummary";
 
@@ -55,6 +50,7 @@ export default function index(props) {
         backgroundColor: "#decbf5",
         marginTop: 6,
         marginBottom: 12,
+        width: "90%",
       }}
     >
       <AccordionSummary
