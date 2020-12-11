@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { Col, Button } from "react-bootstrap";
+
 import { selectUser } from "../../store/user/selectors";
 import { selectToday } from "../../store/appState/selectors";
-import Container from "react-bootstrap/Container";
+
 import { useHistory } from "react-router-dom";
 import { fetchPatientHistory } from "../../store/patientHistory/actions";
 import { selectPatientHistory } from "../../store/patientHistory/selectors";
@@ -12,7 +12,29 @@ import Chart from "../../components/Chart";
 
 import { selectAppLoading } from "../../store/appState/selectors";
 import ItchyButton from "../../components/ItchyButton";
-import { Grid } from "@material-ui/core";
+import { Container, Grid, Button, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
+
+const useStyles = makeStyles((theme) => ({
+  loginButtonTextStyle: {
+    color: "white",
+  },
+  root: {
+    "& > *": {
+      margin: theme.spacing(1),
+    },
+  },
+  paper: {
+    height: 140,
+    width: 100,
+  },
+  control: {
+    padding: theme.spacing(2),
+  },
+  body1: {
+    padding: theme.spacing(2),
+  },
+}));
 
 export default function MyHistory() {
   const { token } = useSelector(selectUser);
@@ -21,8 +43,6 @@ export default function MyHistory() {
   const history = useHistory();
   const dispatch = useDispatch();
   const isLoading = useSelector(selectAppLoading);
-  // console.log("today", today )
-  // console.log("patient history from selector", patientHistory )
 
   if (token === null) {
     console.log("token null");
@@ -35,42 +55,77 @@ export default function MyHistory() {
   }, [dispatch]);
 
   const patientHistoryData = patientHistory.map((day) => {
-    return { date: `${day.date}`, itchScore: `${day.itchScore}` };
+    //Changing the date content to do not show the year
+    const dateString = day.date;
+    const myDateSplit = dateString.split("-");
+    const myDate = myDateSplit[1] + "-" + myDateSplit[2];
+    console.log("myDateElements", myDate);
+
+    return { date: `${myDate}`, itchScore: `${day.itchScore}` };
   });
 
   const data = patientHistoryData.reverse();
 
   return (
-    <Container /* as={Col} md={{ span: 6, offset: 3 }} className="mt-2" */>
-      <h1 className="text-white"> Patient history</h1>
-      <p className="text-white"> Welcome to your journal!</p>
-      <p className="text-white">
-        Today is <strong>{today}</strong>
-      </p>
-      <Link to="/newday" className="text-white">
-        <Button
-          type="button"
-          className="mb-2 btn btn-lg btn-block btn-outline-light"
+    <Container>
+      <Container>
+        <Grid
+          container
+          direction="column"
+          justify="center"
+          alignItems="center"
+          style={{ marginTop: 12, marginBottom: 12 }}
         >
-          Click here to create a new day in your journal.
-        </Button>
-      </Link>
-      <div className="card-body">
-        <Chart data={data} />
-
-        <button
-          type="button"
-          onClick={() => dispatch(fetchPatientHistory())}
-          className="btn btn-lg btn-block btn-outline-primary"
-        >
-          Load more
-        </button>
-      </div>
+          {" "}
+          <Typography
+            variant="h5"
+            justify="center"
+            align="center"
+            style={{ marginBottom: 12 }}
+          >
+            Patient homepage
+          </Typography>
+          <br></br>
+          <Typography
+            variant="body"
+            justify="center"
+            align="center"
+            style={{ marginBottom: 12 }}
+          >
+            Today is <strong>{today}</strong>
+          </Typography>
+          <Link
+            to="/newday"
+            className="text-white mb-2"
+            style={{ textDecoration: "none" }}
+          >
+            <Button variant="contained" color="primary">
+              Create a new day in your journal
+            </Button>
+          </Link>
+          <Chart data={data} />
+          <Button
+            style={{
+              maxWidth: "150px",
+              maxHeight: "30px",
+              minWidth: "150px",
+              minHeight: "30px",
+            }}
+            variant="contained"
+            allign="center"
+            justify="center"
+            color="primary"
+            onClick={() => dispatch(fetchPatientHistory())}
+          >
+            Load more
+          </Button>
+        </Grid>
+      </Container>
       <Grid container spacing="2">
         {patientHistory.map((day) => {
           return (
             <Grid item xs={12} sm={4}>
-              <ItchyButton key={day.id} day={day} />{" "}
+              <ItchyButton key={day.id} day={day} />
             </Grid>
           );
         })}
@@ -78,9 +133,31 @@ export default function MyHistory() {
       {isLoading ? (
         <em>Loading...</em>
       ) : (
-        <Button onClick={() => dispatch(fetchPatientHistory())}>
-          Load more
-        </Button>
+        <Grid
+          container
+          direction="column"
+          justify="center"
+          alignItems="center"
+          style={{ marginTop: 12, marginBottom: 12 }}
+        >
+          <Button
+            style={{
+              marginTop: 12,
+              marginBottom: 12,
+              maxWidth: "150px",
+              maxHeight: "30px",
+              minWidth: "150px",
+              minHeight: "30px",
+            }}
+            variant="contained"
+            allign="center"
+            justify="center"
+            color="primary"
+            onClick={() => dispatch(fetchPatientHistory())}
+          >
+            Load more
+          </Button>
+        </Grid>
       )}
     </Container>
   );
