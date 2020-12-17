@@ -176,7 +176,6 @@ export default function ItchyButton(props) {
                 </label> */}
               <label>Itch score: </label>
               <Select
-                label="Note"
                 labelId="demo-simple-select-filled-label"
                 id="demo-simple-select-filled"
                 value={`${score}`}

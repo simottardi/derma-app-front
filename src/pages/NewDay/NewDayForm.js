@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
+/* import Button from "react-bootstrap/Button"; */
 import { selectToken, selectUser } from "../../store/user/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -14,6 +14,29 @@ import {
 import { CloudinaryContext, Image } from "cloudinary-react";
 import { openUploadWidget } from "../../CloudinaryService";
 import { cloudName } from "../../config/constants";
+
+//MATERIAL UI
+import { makeStyles } from "@material-ui/styles";
+import {
+  Typography,
+  TextField,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  AccordionSummary,
+  AccordionDetails,
+  Accordion,
+  Grid,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from "@material-ui/core";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 
 export default function NewDayForm() {
   const dispatch = useDispatch();
@@ -31,6 +54,10 @@ export default function NewDayForm() {
   const user = useSelector(selectUser);
   const idPatient = user.id;
   const [images, setImages] = useState([]); // this is the cloudinary array
+
+  const handleDateChange = (date) => {
+    setDayDate(date);
+  };
 
   console.log("cloudname", cloudName);
 
@@ -98,134 +125,200 @@ export default function NewDayForm() {
   };
 
   return (
-    <Container className="pt-2 pb-2 text-black">
-      {/*     <div className="card-deck"> */}
-      <div className="card shadow-sm">
-        <div className="card-header">
-          <h4 className="my-0 font-weight-normal text-primary">
-            New entry: {date}
-          </h4>
-        </div>
-        <div className="card-body text-center">
-          <Form.Group>
-            <Form.Label>Select the new day date</Form.Label>
-            <input
-              type="date"
-              max={today}
-              value={date}
-              min="2020-07-31"
-              style={{ marginRight: 15 }}
-              onChange={(event) =>
-                setDayDate(event.target.value) && console.log("note", date)
-              }
-            />
-          </Form.Group>
-          <Form.Group>
-            <div className="form-group">
-              <label htmlFor="exampleFormControlSelect1">
-                How much itchiness today? <strong>{`${score}`}</strong>
-              </label>
-              <select
-                value={`${score}`}
-                onChange={(event) =>
-                  setScore(event.target.value) &&
-                  console.log(event.target.value)
-                }
-                className="form-control"
-              >
-                <option>0</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </select>
-            </div>
-          </Form.Group>
+    <Accordion
+      style={{
+        paddingTop: 12,
+        paddingBottom: 12,
+        paddingRight: 12,
+        paddingLeft: 12,
+        backgroundColor: "#decbf5",
+        marginTop: 6,
+        marginBottom: 12,
+      }}
+      expanded
+    >
+      <AccordionDetails
+        style={{
+          borderTop: "1px solid rgba(0, 0, 0, .125)",
+          borderBottom: "1px solid rgba(0, 0, 0, .125)",
+          borderLeft: "1px solid rgba(0, 0, 0, .125)",
+          borderRight: "1px solid rgba(0, 0, 0, .125)",
+        }}
+      >
+        <Grid>
+          <form noValidate autoComplete="off">
+            <Grid
+              container
+              direction="column"
+              justify="flex-start"
+              alignItems="baseline"
+              style={{ width: "100%", marginBottom: 16 }}
+            >
+              <Grid container direction="row">
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <KeyboardDatePicker
+                    disableToolbar
+                    variant="inline"
+                    id="date-picker-inline"
+                    format="yyyy/MM/dd"
+                    label="Select the new day date"
+                    value={date}
+                    onChange={handleDateChange}
+                    KeyboardButtonProps={{
+                      "aria-label": "change date",
+                    }}
+                  />
+                </MuiPickersUtilsProvider>{" "}
+              </Grid>
+              <Grid container direction="row">
+                <FormControl style={{ minWidth: 120, marginTop: 10 }}>
+                  <InputLabel
+                    shrink
+                    id="demo-simple-select-placeholder-label-label"
+                  >
+                    Itch score:
+                  </InputLabel>
 
-          <Form.Group>
-            <Form.Label>Note</Form.Label>
-            <div className="form-group">
-              <textarea
-                className="form-control"
-                rows="3"
-                value={note}
-                onChange={(event) =>
-                  setDayNote(event.target.value) && console.log("note", note)
-                }
-                type="text"
-                placeholder={`${note}` || "What is your note for the day?"}
-              ></textarea>
-            </div>
-          </Form.Group>
-          <Form.Group>
-            {/*             <Image
+                  <Select
+                    label="Note"
+                    id="demo-simple-select-filled"
+                    value={`${score}`}
+                    onChange={(event) =>
+                      setScore(event.target.value) &&
+                      console.log(event.target.value)
+                    }
+                    style={{ paddingLeft: 8 }}
+                  >
+                    <MenuItem value={0}>0</MenuItem>
+                    <MenuItem value={1}>1</MenuItem>
+                    <MenuItem value={2}>2</MenuItem>
+                    <MenuItem value={3}>3</MenuItem>
+                    <MenuItem value={4}>4</MenuItem>
+                    <MenuItem value={5}>5</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+            </Grid>
+            <TextField
+              id="outlined-textarea"
+              label="Note"
+              variant="outlined"
+              value={note}
+              onChange={(event) =>
+                setDayNote(event.target.value) && console.log("note", note)
+              }
+              placeholder={`${note}` || "What is your note for the day?"}
+              variant="filled"
+              multiline
+              style={{ width: "100%", marginBottom: 16 }}
+            />
+            <Image
               cloudName={cloudName}
               publicId={image}
-              width="600"
+              width="300"
               crop="scale"
-            /> */}
+              className="img-thumbnail"
+              style={{ marginBottom: 16 }}
+            />
 
             <CloudinaryContext cloudName={cloudName}>
-              <Button onClick={() => beginUpload()}>Upload Image</Button>
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+              >
+                <Button
+                  variant="contained"
+                  allign="center"
+                  justify="center"
+                  color="primary"
+                  onClick={() => beginUpload()}
+                  style={{ marginBottom: 16 }}
+                >
+                  Upload Image
+                </Button>
+              </Grid>
               <section>
                 {images.map((i) => (
                   <Image
                     key={i}
                     publicId={i}
                     fetch-format="auto"
-                    width="300"
-                    crop="scale"
-                    className="mt-1 img-thumbnail"
+                    quality="auto"
+                    className="img-thumbnail"
                   />
                 ))}
               </section>
             </CloudinaryContext>
-          </Form.Group>
-          <Form.Group className="form-check-inline">
-            <Form.Label className="form-check-label">
-              Morning medication{" "}
-              <Form.Control
-                className="form-check-input"
-                value={medicationMorning}
-                onClick={(event) => setDayMedicationMorning(!medicationMorning)}
-                type="checkbox"
-                defaultChecked={medicationMorning}
-              />
-            </Form.Label>
-            <Form.Label className="form-check-label">
-              Afternoon medication{" "}
-              <Form.Control
-                className="form-check-input"
-                value={medicationAfternoon}
-                onClick={(event) =>
-                  setDayMedicationAfternoon(!medicationAfternoon)
-                }
-                type="checkbox"
-                defaultChecked={medicationAfternoon}
-              />
-            </Form.Label>
-            <Form.Label className="form-check-label">
-              Evening medication{" "}
-              <Form.Control
-                className="form-check-input"
-                label="Evening medication"
-                value={medicationEvening}
-                onClick={(event) => setDayMedicationEvening(!medicationEvening)}
-                type="checkbox"
-                defaultChecked={medicationEvening}
-              />
-            </Form.Label>
-          </Form.Group>
-          <Form.Group>
-            <Button variant="success" type="submit" onClick={submitForm}>
-              Save changes
-            </Button>
-          </Form.Group>
-        </div>
-      </div>
-      {/* 
-      </div> */}
-    </Container>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name="checkedB"
+                  color="primary"
+                  value={medicationMorning}
+                  onClick={(event) =>
+                    setDayMedicationMorning(!medicationMorning)
+                  }
+                  type="checkbox"
+                  defaultChecked={medicationMorning}
+                />
+              }
+              label="Medication morning"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name="checkedB"
+                  color="primary"
+                  value={medicationAfternoon}
+                  onClick={(event) =>
+                    setDayMedicationAfternoon(!medicationAfternoon)
+                  }
+                  type="checkbox"
+                  defaultChecked={medicationAfternoon}
+                />
+              }
+              label="Medication afternoon"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name="checkedB"
+                  color="primary"
+                  value={medicationEvening}
+                  onClick={(event) =>
+                    setDayMedicationEvening(!medicationEvening)
+                  }
+                  type="checkbox"
+                  defaultChecked={medicationEvening}
+                />
+              }
+              label="Medication evening"
+            />
+            <Grid
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
+            >
+              <Button
+                type="submit"
+                onClick={submitForm}
+                variant="contained"
+                size="large"
+                color="primary"
+                style={{
+                  backgroundColor: "#10a10b",
+                  borderColor: "#005cbf",
+                }}
+              >
+                Save changes
+              </Button>
+            </Grid>
+          </form>
+        </Grid>
+      </AccordionDetails>
+    </Accordion>
   );
 }
