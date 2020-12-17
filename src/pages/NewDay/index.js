@@ -1,15 +1,27 @@
 import React from "react";
 import NewDayForm from "./NewDayForm";
-import { Col } from "react-bootstrap";
-import Container from "react-bootstrap/Container";
+import { Container, Grid, Typography } from "@material-ui/core";
 
 export default function newday() {
   return (
-    <div>
-      <Container as={Col} md={{ span: 6, offset: 3 }} className="mt-5 mb-2">
-        <h1 className="text-white text-center"> Create new day </h1>
+    <Container>
+      <Grid
+        container
+        direction="column"
+        justify="center"
+        alignItems="center"
+        style={{ marginTop: 12, marginBottom: 12 }}
+      >
+        <Typography
+          variant="h5"
+          justify="center"
+          align="center"
+          style={{ marginBottom: 12 }}
+        >
+          New diary entry
+        </Typography>
         <NewDayForm />
-      </Container>
-    </div>
+      </Grid>
+    </Container>
   );
 }
